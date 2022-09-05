@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -74,7 +75,7 @@ class _TodoListPageState extends State<TodoListPage> {
             ),
             Expanded(
                 child: ListView(
-                children: _items.map((todo)=>_buildItemWidget(todo)).toList(),
+                children: _items.map((d)=>_buildItemWidget(d)).toList(),
               ),
             ),
           ],
