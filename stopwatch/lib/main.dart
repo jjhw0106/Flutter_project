@@ -77,7 +77,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
                   width: 100,
                   height: 200,
                   child: ListView(
-                    children: _labTimes.map((time)=>print(Text(time)).toList())),
+                    children: _labTimes.map((time)=>Text(time).toList()),
                 ),
               ],
             ),
