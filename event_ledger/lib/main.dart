@@ -1,5 +1,6 @@
 import 'package:event_ledger/event_happy.dart';
 import 'package:event_ledger/event_sad.dart';
+import 'package:event_ledger/event_total.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,8 +18,9 @@ class MyApp extends StatelessWidget {
       ),
       home: ledgerMain(),
       routes: {
-        '/first': (context) => happyMain(),
-        '/second': (context) => sadMain(),
+        '/happy': (context) => happyMain(),
+        '/sad': (context) => sadMain(),
+        '/total': (context) => totalMain(),
       }
     );
   }
@@ -39,8 +41,56 @@ class _ledgerMainState extends State<ledgerMain> {
         title: Text('메인페이지'),
         centerTitle: true,
       ),
-      body: MaterialApp(
-
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 100,
+                    width: 100,
+                    child: ElevatedButton(
+                      child: Text("경사", textAlign: TextAlign.center),
+                      onPressed: () async{
+                        final result = await Navigator.pushNamed(context,'/happy');
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Container(
+                    height:100,
+                    width: 100,
+                    child: ElevatedButton(
+                      child: Text("조사"),
+                      onPressed: () async{
+                        final result = await Navigator.pushNamed(context, '/sad');
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                child: Container(
+                  child: Text("집계"),
+                ),
+                onPressed: () async{
+                  final result = await Navigator.pushNamed(context, '/total');
+                },
+              )
+            ],
+          )
+        ],
       )
     );
   }
