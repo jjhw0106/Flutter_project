@@ -53,11 +53,24 @@ class _happyMainState extends State<happyMain> {
     return _textFieldForm();
   }
   Widget _buildMiddle(){
-    return Container(
-        color: Colors.blue,
-        child:_listViewForm()
+    return ListView(
+      children: <Widget>[
+        Container(
+          height: 10,
+          color:Colors.orange,
+        ),
+        Container(
+          height: 10,
+          color:Colors.blue,
+        ),
+        Container(
+          height: 10,
+          color:Colors.red,
+        ),
+      ],
     );
   }
+
   Widget _buildBottom(){
     return Text("bottom");
   }
@@ -66,19 +79,41 @@ class _happyMainState extends State<happyMain> {
     setState(() {
       _items.add(happyInfo);
       _nameController.text = '';
+      _dateController.text = '';
+      _moneyController.text = '';
     });
-    print('nameController: $_nameController.ㅍ');
+    print(_nameController.text);
+    print(_dateController.text);
+    print(_moneyController.text);
   }
   Widget _textFieldForm(){
     return Container(
       height: 100,
       child: Row(
         children: [
-          Flexible(flex:1,child:TextField(decoration: InputDecoration(border:OutlineInputBorder(),labelText: '이름')),),
+          Flexible(
+            flex:1,
+            child:TextField(
+              controller: _nameController,
+              decoration: InputDecoration(border:OutlineInputBorder(),labelText: '이름')
+            ),
+          ),
           SizedBox(width:5),
-          Flexible(flex:1,child:TextField(decoration: InputDecoration(border:OutlineInputBorder(),labelText: '날짜')),),
+          Flexible(
+            flex:1,
+            child:TextField(
+                controller: _dateController,
+                decoration: InputDecoration(border:OutlineInputBorder(),labelText: '날짜')
+            ),
+          ),
           SizedBox(width:5),
-          Flexible(flex:1,child:TextField(decoration: InputDecoration(border:OutlineInputBorder(),labelText: '축의금')),),
+          Flexible(
+            flex:1,
+            child:TextField(
+                controller: _moneyController,
+                decoration: InputDecoration(border:OutlineInputBorder(),labelText: '축의금')
+            ),
+          ),
           SizedBox(width:5),
           Flexible(flex:1,child:ElevatedButton(
             child: Icon(Icons.add)
@@ -95,8 +130,12 @@ class _happyMainState extends State<happyMain> {
       ),
     );
   }
-}
+  Widget _buildItemWidget(HappyInfo happyInfo){
+    return ListTile(
 
+    );
+  }
+}
 class _MyCustomTextField extends StatefulWidget {
 
   const _MyCustomTextField({Key? key}) : super(key: key);
@@ -111,18 +150,15 @@ class _MyCustomTextFieldState extends State<_MyCustomTextField> {
     return Container();
   }
 }
-
-
-
-Widget _listViewForm(){
-  final items = <HappyInfo>[];
+Widget _listViewForm(List<HappyInfo> items){
+  final _items = <HappyInfo>[];
   var _todoController = TextEditingController();
   return ListView(
-    children: [],
+    children: <Widget>[
+      Text('Items Size : ${items.length}')
+    ],
   );
 }
-
-
 
 class HappyInfo{
   String name;
@@ -131,3 +167,4 @@ class HappyInfo{
 
   HappyInfo(this.name, this.date, this.money);
 }
+
