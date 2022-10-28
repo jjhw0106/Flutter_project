@@ -2,6 +2,8 @@ import 'package:event_ledger/event_happy.dart';
 import 'package:event_ledger/event_sad.dart';
 import 'package:event_ledger/event_total.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +24,17 @@ class MyApp extends StatelessWidget {
         '/sad': (context) => sadMain(),
         '/total': (context) => totalMain(),
       }
+    );
+  }
+  Future<Database> initDatabase() async{
+    return openDatabase(
+      join(await getDatabasesPath(), 'happy_database.db'),
+      onCreate: (db, version) {
+        return db.execute(
+          "CREATE TABLE HAPPY (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, active BOOL)",
+        );
+      },
+      version: 1,
     );
   }
 }

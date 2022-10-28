@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:js_util/js_util_wasm.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class happyMain extends StatefulWidget {
   const happyMain({Key? key}) : super(key: key);
@@ -10,10 +16,12 @@ class happyMain extends StatefulWidget {
 class _happyMainState extends State<happyMain> {
 
   final _items = <HappyInfo>[];
+  final numberFormat = NumberFormat('#,###');
 
   var _nameController = TextEditingController();
   var _dateController = TextEditingController();
   var _moneyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +36,7 @@ class _happyMainState extends State<happyMain> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _buildTop(),
-            Expanded(child:_buildMiddle()),
+            _buildMiddle(),
             Container(child:_buildBottom()),
           ],
         ),
@@ -53,21 +61,11 @@ class _happyMainState extends State<happyMain> {
     return _textFieldForm();
   }
   Widget _buildMiddle(){
-    return ListView(
-      children: <Widget>[
-        Container(
-          height: 10,
-          color:Colors.orange,
-        ),
-        Container(
-          height: 10,
-          color:Colors.blue,
-        ),
-        Container(
-          height: 10,
-          color:Colors.red,
-        ),
-      ],
+    return Expanded(
+      child: ListView(
+        children: _items.map((item)=>_buildItemWidget(item)).toList(),
+        // onTap: ()=>,
+      ),
     );
   }
 
@@ -78,9 +76,9 @@ class _happyMainState extends State<happyMain> {
   void _addInfo(HappyInfo happyInfo){
     setState(() {
       _items.add(happyInfo);
-      _nameController.text = '';
-      _dateController.text = '';
-      _moneyController.text = '';
+      // _nameController.text = '';
+      // _dateController.text = '';
+      // _moneyController.text = '';
     });
     print(_nameController.text);
     print(_dateController.text);
@@ -111,7 +109,11 @@ class _happyMainState extends State<happyMain> {
             flex:1,
             child:TextField(
                 controller: _moneyController,
-                decoration: InputDecoration(border:OutlineInputBorder(),labelText: '축의금')
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+                decoration: InputDecoration(
+                    border:OutlineInputBorder(),
+                    labelText: '축의금')
             ),
           ),
           SizedBox(width:5),
@@ -121,7 +123,7 @@ class _happyMainState extends State<happyMain> {
               HappyInfo(
               _nameController.text,
               _dateController.text,
-              _moneyController.text
+              int.parse(_moneyController.text),
               ),
             ),
           )
@@ -130,10 +132,37 @@ class _happyMainState extends State<happyMain> {
       ),
     );
   }
+
   Widget _buildItemWidget(HappyInfo happyInfo){
     return ListTile(
-
+      leading: Text(
+        happyInfo.name
+      ),
+      title: Text(
+        happyInfo.date,
+      ),
+      subtitle: Text(
+        '${numberFormat.format(happyInfo.money)}',
+      ),
+      trailing: IconButton(
+        icon: Icon(Icons.delete_forever),
+        onPressed: () => _deleteInfo(happyInfo),
+      ),
     );
+  }
+
+  void _deleteInfo(HappyInfo happyInfo){
+    setState(() {
+      _items.remove(happyInfo);
+    });
+  }
+
+  void _loadData() async{
+    var key = 'name';
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      var value = pref.getString(key);
+    });
   }
 }
 class _MyCustomTextField extends StatefulWidget {
@@ -163,8 +192,16 @@ Widget _listViewForm(List<HappyInfo> items){
 class HappyInfo{
   String name;
   String date;
-  String money;
+  int money;
 
   HappyInfo(this.name, this.date, this.money);
+
+  Map<String, dynamic> toMap(){
+    return {
+      'name' : name,
+      'date' : date,
+      'money': money,
+    };
+  }
 }
 
