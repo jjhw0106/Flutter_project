@@ -1,66 +1,4 @@
-import 'package:flutter/material.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        home: FirstPage()
-    );
-  }
-}
-
-class FirstPage extends StatelessWidget {
-  const FirstPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('First Page'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child:Text('Go to the second page'),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(
-                builder: (_) => SecondPage()
-            )
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Second page'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child:Text('Go to the First page'),
-          onPressed: (){
-            Navigator.pop(context);
-          },
-        ),
-      ),
-    );
-  }
-}
-
-
 // import 'package:flutter/material.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 //
 // void main() => runApp(MyApp());
 //
@@ -82,30 +20,30 @@ class SecondPage extends StatelessWidget {
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text('Toast Message'),
+//         title: Text('Snack Bar!'),
 //         centerTitle: true,
 //       ),
 //       body: Center(
 //         child: ElevatedButton(
-//           onPressed: () {
-//             flutterToast();
+//           child: Text('Click'),
+//           onPressed:() {
+//             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//                   content: Text('Clicked!!',
+//                   textAlign: TextAlign.center,
+//                   style: TextStyle(color: Colors.white),
+//                 ),
+//               backgroundColor: Colors.teal,
+//               duration: Duration(milliseconds: 1000),
+//
+//             )
+//             );
 //           },
-//           child: Text('Toast'),
-//         )
-//       )
+//         ),
+//       ),
 //     );
 //   }
 // }
-//
-// void flutterToast(){
-//   Fluttertoast.showToast(msg: 'Toast Message',
-//     gravity: ToastGravity.BOTTOM,
-//     backgroundColor: Colors.redAccent,
-//     fontSize: 15,
-//     textColor: Colors.white,
-//     toastLength: Toast.LENGTH_SHORT,
-//   );
-// }
+
 
 // import 'package:flutter/material.dart';
 //
@@ -117,11 +55,62 @@ class SecondPage extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
+//       title: 'Snack bar',
+//       theme: ThemeData(
+//         primarySwatch: Colors.red
+//       ),
+//       home: MyPage(),
+//     );
+//   }
+// }
+//
+// class MyPage extends StatelessWidget {
+//   const MyPage({Key? key}) : super(key: key);
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('SnackBar'),
+//         centerTitle: true,
+//       ),
+//       body: Center(
+//         child: ElevatedButton(
+//           child: Text(
+//             'Show me',
+//             style: TextStyle(color: Colors.white),
+//           ),
+//           onPressed: (){
+//             //SnackBar 구현
+//             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//                 content: Text('New Snack Bar'),
+//             )
+//             );
+//             // Scaffold.of(context).showSnackBar(snackbar)
+//
+//             print('button tapped!!!!!');
+//           },
+//         )
+//       ),
+//     );
+//   }
+// }
+
+
+// import 'package:flutter/material.dart';
+//
+// void main() => runApp(MyApp());
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
 //     debugShowCheckedModeBanner: false,
 //       title: 'BBANTO',
 //       home: Grade(),
 //     );
-//    }
+//   }
 // }
 //
 // class Grade extends StatelessWidget {
