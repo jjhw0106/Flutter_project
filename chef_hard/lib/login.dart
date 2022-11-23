@@ -100,11 +100,6 @@ class _LogInState extends State<LogIn> {
                                 } catch(msg){
                                   _showAlert(msg.toString());
                                 }
-                                // if('Dice' != controller.text){
-                                //   Exception("아이디가 틀렸습니다.");
-                                // } else if('1234' != controller2.text){
-                                //   Exception("비밀번호가 틀렸습니다.");
-                                // }
                               },
                           )
                         ),

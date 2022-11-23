@@ -12,11 +12,39 @@ class _DiceState extends State<Dice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.orangeAccent,
       appBar: AppBar(
-        title: Text('로그인'),
-        centerTitle: true,
+        backgroundColor: Colors.redAccent,
+        title: Text('DiceGame'),
       ),
-      body: Text("로그인하신 ID : " + widget.id),
+      body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                        child: Image.asset('image/dice1.png')
+                    ),
+
+                    SizedBox(width: 20),
+
+                    Expanded(
+                      flex: 1,
+                        child: Image.asset('image/dice2.png')
+                    ),
+                  ],
+                ),
+              ),
+              ElevatedButton(onPressed: (){}, child: )
+            ],
+          )
+      ),
     );
   }
 }
