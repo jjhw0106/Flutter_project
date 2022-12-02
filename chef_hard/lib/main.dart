@@ -1,6 +1,7 @@
 import 'package:chef_hard/increment_decrement.dart';
-import 'package:chef_hard/login.dart';
+import 'package:chef_hard/login2.dart';
 import 'package:flutter/material.dart';
+import 'package:chef_hard/login_app/login3.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,6 @@ class MyApp extends StatefulWidget {
 * 2. login_dice
 * */
 class MyAppState extends State<MyApp>{
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +27,7 @@ class MyAppState extends State<MyApp>{
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LogIn(title:  'Flutter Demo Home Page'),
+      home: const LogIn(),
     );
   }
 }
