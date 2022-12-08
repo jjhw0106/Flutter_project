@@ -5,8 +5,16 @@ import '../login_app/login3.dart';
 class MyButton extends StatelessWidget {
   // const MyButton({Key? key}) : super(key: key);
 
-  MyButton({required this.image,required this.text,required this.color,required this.radius,required this.onPressed,
-    required this.backgroundColor});
+  MyButton(
+      {
+        required this.image,
+        required this.text,
+        required this.color,
+        required this.radius,
+        required this.onPressed,
+        required this.backgroundColor
+      }
+  );
 
   final Widget image;
   final Widget text;
