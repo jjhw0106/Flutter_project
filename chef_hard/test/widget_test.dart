@@ -1,37 +1,33 @@
-import 'dart:io'; // socket, http 서버와 통신시 필요
-
 void main() async {
-  showData();
+  methodA();
+  await methodB();
+  await methodC('main');
+  methodD();
 }
 
-void showData() async {
-  startTask();
-  String? account = await accessData();
-  fetchData(account);
+methodA(){
+  print('A');
 }
 
-void startTask(){
-  String info1 = '요청수행 시작';
-  print(info1);
+methodB() async {
+  print('B starts');
+  await methodC('B');
+  print('B end');
 }
 
-Future<String?> accessData() async {
-  String? account;
+methodC(String from) async {
+  print('C start from $from');
 
-  Duration time = Duration(seconds: 3);
-  if(time.inSeconds>2){
-    await Future.delayed(time,(){
-      account = '데이터 처리 완료';
-      print(account);
-    });
-  }else{
-    account = '데이터를 가져왔습니다';
-    print(account);
-  }
-  return account;
+  await Future((){
+    print('C running Future from $from');
+  }).then((_){
+    print('C end of Future from $from');
+  });
+
+  print('C end from $from');
+
 }
 
-void fetchData(String? account){
-  // account = '잔액은 8,500만원입니다';
-  print("$account의 잔액은 8,500만원입니다.");
+methodD(){
+  print('D');
 }
