@@ -47,7 +47,17 @@ class _FutureExState extends State<FutureEx> {
                       thickness: 2.0,
                     ),
                     FutureBuilder(
-                        builder: builder
+                      future: myFuture(),
+                      builder: (context, snapshot) {
+                        if(snapshot.connectionState == ConnectionState.done){
+                          return Text(
+                            snapshot.data.toString(),
+                            style: TextStyle(color: Colors.red),
+                          );
+                        }
+                        return CircularProgressIndicator();
+                      },
+                      // initialData: ,
                     )
                   ]
               )
