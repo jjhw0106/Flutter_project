@@ -1,4 +1,4 @@
-import 'package:chef_hard/flutter_future_ex/main.dart';
+import 'package:chef_hard/flutter_future_ex/futureEx.dart';
 import 'package:chef_hard/increment_decrement.dart';
 import 'package:chef_hard/login2.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class MyAppState extends State<MyApp>{
 
 
 
-// import 'package:chef_hard/main.dart';
+// import 'package:chef_hard/futureEx.dart';
 // import 'package:flutter/material.dart';
 //
 // void main(){
