@@ -48,16 +48,6 @@ class _FutureExState extends State<FutureEx> {
                     ),
                     FutureBuilder(
                       future: myFuture(),
-<<<<<<< HEAD:chef_hard/lib/flutter_future_ex/main.dart
-                      builder: (context, snapshot){
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return Text(
-                            snapshot.data.toString(),
-                            style: TextStyle(fontSize: 20, color: Colors.blue),);
-                        }
-                      },
-
-=======
                       builder: (context, snapshot) {
                         if(snapshot.connectionState == ConnectionState.done){
                           return Text(
@@ -68,7 +58,6 @@ class _FutureExState extends State<FutureEx> {
                         return CircularProgressIndicator();
                       },
                       // initialData: ,
->>>>>>> ebab0c700868f14bb8d43381d3281b5a6f0d812d:chef_hard/lib/flutter_future_ex/futureEx.dart
                     )
                   ]
               )
