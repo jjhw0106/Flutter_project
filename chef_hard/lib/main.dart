@@ -1,6 +1,8 @@
 import 'package:chef_hard/flutter_future_ex/futureEx.dart';
 import 'package:chef_hard/increment_decrement.dart';
 import 'package:chef_hard/login2.dart';
+import 'package:chef_hard/screen_navi/screen_main.dart';
+import 'package:chef_hard/weather_app/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:chef_hard/login_app/login3.dart';
 
@@ -22,6 +24,8 @@ class MyApp extends StatefulWidget {
 * 3. Firebase login app
 * 4. LogIn() (../login3)
 * 5. FutureEx()
+* 6. ScreenMain
+* 7. WeatherApp_Loading()
 * */
 class MyAppState extends State<MyApp>{
   @override
@@ -31,7 +35,7 @@ class MyAppState extends State<MyApp>{
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const FutureEx(),
+      home: const Loading(),
     );
   }
 }
