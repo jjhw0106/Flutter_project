@@ -1,5 +1,6 @@
-import 'package:chef_hard/data/my_location.dart';
-import 'package:chef_hard/data/network.dart';
+import 'package:chef_hard/weather_app/data/my_location.dart';
+import 'package:chef_hard/weather_app/data/network.dart';
+import 'package:chef_hard/weather_app/screens/weather_screen.dart';
 import 'package:flutter/material.dart';
 const String apiKey = "a2a07aef1c47da4c3dba9d12a303c8f6";
 
@@ -40,5 +41,8 @@ class _LoadingState extends State<Loading> {
     Network network = Network(url);
     var weatherData = await network.getJsonData();
     print(weatherData);
+    Navigator.push(context, MaterialPageRoute(builder: ((context) {
+      return WeatherScreen();
+    })));
   }
 }

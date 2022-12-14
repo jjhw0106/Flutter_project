@@ -2,7 +2,7 @@ import 'package:chef_hard/flutter_future_ex/futureEx.dart';
 import 'package:chef_hard/increment_decrement.dart';
 import 'package:chef_hard/login2.dart';
 import 'package:chef_hard/screen_navi/screen_main.dart';
-import 'package:chef_hard/weather_app/loading.dart';
+import 'package:chef_hard/weather_app/screens/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:chef_hard/login_app/login3.dart';
 
