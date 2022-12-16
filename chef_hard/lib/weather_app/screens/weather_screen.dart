@@ -29,6 +29,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   fontSize: 30,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
             ],
           )
         )
