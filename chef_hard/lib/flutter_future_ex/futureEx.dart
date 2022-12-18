@@ -25,7 +25,6 @@ class _FutureExState extends State<FutureEx> {
                     ElevatedButton(
                       onPressed: (){
                         futureTest();
-
                       },
                       child: Padding(
                           padding: EdgeInsets.all(8.0),
