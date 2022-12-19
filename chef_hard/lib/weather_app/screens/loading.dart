@@ -36,7 +36,7 @@ class _LoadingState extends State<Loading> {
     await myLocation.getMyCurrentLocation();
     lat = myLocation.latitude;
     lon = myLocation.longitude;
-    url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey";
+    url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric";
 
     Network network = Network(url);
     var weatherData = await network.getJsonData();

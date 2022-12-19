@@ -33,6 +33,7 @@ class MyAppState extends State<MyApp>{
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        // backgroundColor: Colors.redAccent,
         primarySwatch: Colors.blue,
       ),
       home: const Loading(),
