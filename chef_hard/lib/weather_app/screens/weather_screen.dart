@@ -1,3 +1,4 @@
+import 'package:chef_hard/weather_app/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,23 +17,31 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  var weatherData;
-  var temp;
+  Model model = Model();
+
   var cityName;
   var date = DateTime.now();
+  var description;
+  var iconId;
+  var weatherData;
+  var temp;
+
+  Widget? icon;
 
   @override
   void initState() {
     // TODO: implement initState
     weatherData = widget.parseWeatherData;
     super.initState();
-    print(widget.parseWeatherData);
     updateData(weatherData);
   }
 
   void updateData(dynamic weatherData){
-    temp = weatherData['main']['temp'].round();
+    temp = weatherData['main']['temp'].round().toString();
     cityName = weatherData['name'];
+    iconId = weatherData['weather'][0]['id'];
+    description = weatherData['weather'][0]['description'];
+    print("iconId $iconId");
   }
 
   String getSystemTime(){
@@ -40,7 +49,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return formattedDate;
   }
 
-  Text googleTextStyle(String contents, double? fontSize, Color color){
+  Text googleTextStyle(String contents, double? fontSize, Color? color){
     return Text(contents, style: GoogleFonts.lato(fontSize: fontSize, color: color));
   }
 
@@ -79,7 +88,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   SizedBox(
                     height: 130,
                   ),
-                  googleTextStyle("지역", 35, Colors.white),
+                  googleTextStyle(cityName, 35, Colors.white),
                   SizedBox(height: 10),
                   Row(
                     children: [
@@ -95,16 +104,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   SizedBox(height: 70),
                   Row(
                     children: [
-                      googleTextStyle("기온", 50, Colors.white),
+                      googleTextStyle('$temp\u2103', 50, Colors.white),
 
                     ],
                   ),
                   SizedBox(height: 20),
                   Row(
                     children: [
-                      Icon(Icons.sunny,size: 50,),
+                      model.getWeatherIcon(iconId!),
+                      // Icon(Icons.sunny,size: 50,),
                       SizedBox(width: 20),
-                      googleTextStyle("기온", 20, Colors.white),
+                      googleTextStyle("$description", 20, Colors.white),
                     ],
                   ),
                   SizedBox(height: 40),
@@ -119,7 +129,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     children: <Widget> [
                       Column(children:[
                         googleTextStyle("AQI(대기질 지수)", 15, Colors.white),
-                        Icon(Icons.face),
+                        Image.asset('image/bad.png',width: 37, height: 35,),
                         googleTextStyle("매우나쁨", 15, Colors.white),
                       ],),
                       Column(children: [
