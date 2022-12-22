@@ -2,10 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Network{
-  final String url;
-  Network(this.url);
-
-  Future<dynamic> getJsonData() async{
+  // final String url;
+  // Network(this.url);
+  Future<dynamic> getJsonData(String url) async{
     http.Response response = await http.get(Uri.parse(url));
     if(response.statusCode==200){
       String jsonData = response.body;
@@ -14,4 +13,5 @@ class Network{
     }
     print(response.statusCode);
   }
+
 }

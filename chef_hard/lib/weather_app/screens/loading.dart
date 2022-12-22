@@ -14,7 +14,8 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   double? lat;
   double? lon;
-  late String url;
+  late String weatherUrl;
+  late String aqiUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +35,23 @@ class _LoadingState extends State<Loading> {
   Future<void> getMyWeatherInfo() async{
     MyLocation myLocation = MyLocation();
     await myLocation.getMyCurrentLocation();
+
     lat = myLocation.latitude;
     lon = myLocation.longitude;
-    url = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric";
+    weatherUrl = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric";
+    aqiUrl = "http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lon&appid=$apiKey";
 
-    Network network = Network(url);
-    var weatherData = await network.getJsonData();
+    Network network = Network();
+
+    var weatherData = await network.getJsonData(weatherUrl);
+    var aqiData = await network.getJsonData(aqiUrl);
+
     print(weatherData);
+    print(aqiData);
+
     Navigator.push(context, MaterialPageRoute(
         builder: ((context) {
-      return WeatherScreen(parseWeatherData: weatherData,);
+      return WeatherScreen(parseWeatherData: weatherData, parseAqiData: aqiData,);
     })));
   }
 }

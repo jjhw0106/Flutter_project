@@ -7,10 +7,11 @@ import 'package:timer_builder/timer_builder.dart';
 
 class WeatherScreen extends StatefulWidget {
 
-  WeatherScreen({this.parseWeatherData});
+  WeatherScreen({this.parseWeatherData, this.parseAqiData});
 
 
   final dynamic parseWeatherData;
+  final dynamic parseAqiData;
 
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
@@ -19,12 +20,19 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   Model model = Model();
 
+  // 날씨
   var cityName;
   var date = DateTime.now();
   var description;
   var iconId;
   var weatherData;
+  var aqiData;
   var temp;
+
+  // 미세먼지
+  var aqi;
+  var dust;
+  var dust2;
 
   Widget? icon;
 
@@ -32,16 +40,26 @@ class _WeatherScreenState extends State<WeatherScreen> {
   void initState() {
     // TODO: implement initState
     weatherData = widget.parseWeatherData;
+    aqiData = widget.parseAqiData;
+
     super.initState();
-    updateData(weatherData);
+    updateWeatherData(weatherData);
+    updateAqiData(aqiData);
   }
 
-  void updateData(dynamic weatherData){
+  void updateWeatherData(dynamic weatherData){
     temp = weatherData['main']['temp'].round().toString();
     cityName = weatherData['name'];
     iconId = weatherData['weather'][0]['id'];
     description = weatherData['weather'][0]['description'];
     print("iconId $iconId");
+  }
+  void updateAqiData(dynamic aqiData){
+    aqi = aqiData['list'][0]['main']['aqi'];
+    dust = aqiData['list'][0]['components']['pm10'];
+    dust2 = aqiData['list'][0]['components']['pm2_5'];
+
+    print("aqi : $aqi");
   }
 
   String getSystemTime(){
@@ -129,17 +147,17 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     children: <Widget> [
                       Column(children:[
                         googleTextStyle("AQI(대기질 지수)", 15, Colors.white),
-                        Image.asset('image/bad.png',width: 37, height: 35,),
-                        googleTextStyle("매우나쁨", 15, Colors.white),
+                        Image.asset(model.getAQIFace(aqi)[1],width: 37, height: 35,),
+                        googleTextStyle(model.getAQIFace(aqi)[0], 15, Colors.white),
                       ],),
                       Column(children: [
                         googleTextStyle("미세먼지", 15, Colors.white),
-                        googleTextStyle("147.75", 20, Colors.white),
+                        googleTextStyle('$dust', 20, Colors.white),
                         googleTextStyle("ug/m3", 15, Colors.white),
                       ],),
                       Column(children: [
                         googleTextStyle("초미세먼지", 15, Colors.white),
-                        googleTextStyle("84.03", 20, Colors.white),
+                        googleTextStyle('$dust2', 20, Colors.white),
                         googleTextStyle("ug/m3", 15, Colors.white),
                       ],),
                     ],
