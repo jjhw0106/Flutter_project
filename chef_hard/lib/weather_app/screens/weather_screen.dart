@@ -1,5 +1,6 @@
 import 'package:chef_hard/weather_app/model/model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +9,6 @@ import 'package:timer_builder/timer_builder.dart';
 class WeatherScreen extends StatefulWidget {
 
   WeatherScreen({this.parseWeatherData, this.parseAqiData});
-
 
   final dynamic parseWeatherData;
   final dynamic parseAqiData;
@@ -38,11 +38,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
+    print("weather_screen init 실행");
     weatherData = widget.parseWeatherData;
     aqiData = widget.parseAqiData;
 
-    super.initState();
     updateWeatherData(weatherData);
     updateAqiData(aqiData);
   }
@@ -55,6 +56,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
     print("iconId $iconId");
   }
   void updateAqiData(dynamic aqiData){
+    print('aqiData');
+    print(aqiData);
     aqi = aqiData['list'][0]['main']['aqi'];
     dust = aqiData['list'][0]['components']['pm10'];
     dust2 = aqiData['list'][0]['components']['pm2_5'];

@@ -2,7 +2,13 @@ import 'package:chef_hard/weather_app/data/my_location.dart';
 import 'package:chef_hard/weather_app/data/network.dart';
 import 'package:chef_hard/weather_app/screens/weather_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 const String apiKey = "a2a07aef1c47da4c3dba9d12a303c8f6";
+
+const spinkit = SpinKitRotatingCircle(
+  color: Colors.white,
+  size: 50.0,
+);
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -23,8 +29,8 @@ class _LoadingState extends State<Loading> {
       body: Center(
         child: ElevatedButton(
           child: Text('Get My Location'),
-          onPressed: (){
-            getMyWeatherInfo();
+          onPressed: () async {
+            await getMyWeatherInfo();
             // print(Text(getLocation().toString()));
           },
         )
@@ -45,6 +51,7 @@ class _LoadingState extends State<Loading> {
 
     var weatherData = await network.getJsonData(weatherUrl);
     var aqiData = await network.getJsonData(aqiUrl);
+
 
     print(weatherData);
     print(aqiData);
