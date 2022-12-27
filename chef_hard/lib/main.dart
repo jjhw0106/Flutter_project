@@ -1,10 +1,14 @@
 import 'package:chef_hard/flutter_future_ex/futureEx.dart';
 import 'package:chef_hard/increment_decrement.dart';
 import 'package:chef_hard/login2.dart';
+import 'package:chef_hard/provider/fish_model.dart';
+import 'package:chef_hard/provider/screens/fish_order.dart';
+import 'package:chef_hard/provider/seafish_model.dart';
 import 'package:chef_hard/screen_navi/screen_main.dart';
 import 'package:chef_hard/weather_app/screens/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:chef_hard/login_app/login3.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,16 +30,27 @@ class MyApp extends StatefulWidget {
 * 5. FutureEx()
 * 6. ScreenMain
 * 7. WeatherApp_Loading()
+* 8. FishOrder()
 * */
 class MyAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => FishModel(name: 'Salmon', number: 10, size: 'Big')
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SeaFishModel(name: 'Tuna', tunaNumber: 0, size: 'Middle')
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const FishOrder(),
       ),
-      home: const Loading(),
     );
   }
 }
