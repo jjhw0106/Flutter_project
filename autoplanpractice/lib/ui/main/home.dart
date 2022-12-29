@@ -1,3 +1,4 @@
+import 'package:autoplanpractice/ui/timetable.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -9,7 +10,9 @@ class Home extends StatelessWidget {
       body: Container(
         child: Center(
           child: ElevatedButton(
-            onPressed: () {  },
+            onPressed: () {
+              Navigator.pushNamed(context, '/timetable');
+            },
             child: const Text('자동학습계획표'),
           ),
         )
