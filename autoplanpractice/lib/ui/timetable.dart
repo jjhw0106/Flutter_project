@@ -16,6 +16,7 @@ class Timetable extends StatelessWidget {
         // height: double.infinity,
         color: Colors.green,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment : CrossAxisAlignment.center,
           children: [
             Text('fff'),
@@ -27,7 +28,7 @@ class Timetable extends StatelessWidget {
 
   Widget timeBoard(){
     return Container(
-      height: 400,
+      height: 500,
       // width: 400,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -35,20 +36,31 @@ class Timetable extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.all(10),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: [
-            Row(
-              children: List.generate(week.length, (index) => classesByDay())
+        child: Container(
+          // children: [
+          // Column안에 ListView넣을 때 화면 안나오는 오류
+          // https://mike123789-dev.tistory.com/entry/%ED%94%8C%EB%9F%AC%ED%84%B0Column-%EC%95%88%EC%9D%98-ListView
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              children: [
+                Row(children: List.generate(week.length, (index) => Column(children: [Text('${week[index]}')],))),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(week.length, (index) => classesByDay(index))
+                ),
+              ],
             ),
-          ],
+          // ],
         ),
       ),
     );
   }
 
   // 하루(요일) 시간표 생성
-  Widget classesByDay(){
+  Widget classesByDay(int index){
+    if(index == 0){
+
+    }
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: List.generate(kColumnLength, (index) => oneSubject())
