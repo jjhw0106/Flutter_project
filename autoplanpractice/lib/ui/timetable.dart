@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 
-class Timetable extends StatelessWidget {
+class Timetable extends StatefulWidget {
 
+  @override
+  State<Timetable> createState() => _TimetableState();
+}
+
+const double CLASS_HEIGHT = 20;
+const double CLASS_WIDTH = 40;
+
+class _TimetableState extends State<Timetable> {
   List week = ['월', '화', '수', '목', '금', '토', '일'];
+
   var kColumnLength = 32;
+
   double kFirstColumnHeight = 20;
+
   double kBoxSize = 60;
 
   @override
@@ -12,8 +23,8 @@ class Timetable extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Provider')),
       body: Container(
-        // width: double.infinity,
-        // height: double.infinity,
+        width: double.infinity,
+        height: double.infinity,
         color: Colors.green,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,30 +38,19 @@ class Timetable extends StatelessWidget {
   }
 
   Widget timeBoard(){
-    return Container(
-      height: 500,
-      // width: 400,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all()
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Container(
-          // children: [
-          // Column안에 ListView넣을 때 화면 안나오는 오류
-          // https://mike123789-dev.tistory.com/entry/%ED%94%8C%EB%9F%AC%ED%84%B0Column-%EC%95%88%EC%9D%98-ListView
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                Row(children: List.generate(week.length, (index) => Column(children: [Text('${week[index]}')],))),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(week.length, (index) => classesByDay(index))
-                ),
-              ],
-            ),
-          // ],
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all()
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Row(children: List.generate(week.length, (index) => Column(children: [Text('${week[index]}')],))),
+              makeColumns()],
+          ),
         ),
       ),
     );
@@ -70,11 +70,26 @@ class Timetable extends StatelessWidget {
   // 과목 한 칸
   Widget oneSubject(){
     return Container(
-      height: 20,
-      width: 40,
+      height: CLASS_HEIGHT,
+      width: CLASS_WIDTH,
       decoration: BoxDecoration(
         border: Border.all(),
         color: Colors.blue,
+      ),
+    );
+  }
+
+  Widget makeColumns(){
+    return Expanded(
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        children: [
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(week.length, (index) => classesByDay(index))
+          ),
+        ],
       ),
     );
   }
