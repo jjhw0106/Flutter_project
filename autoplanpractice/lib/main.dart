@@ -1,4 +1,5 @@
 import 'package:autoplanpractice/ui/main/home.dart';
+import 'package:autoplanpractice/ui/stateTest.dart';
 import 'package:autoplanpractice/ui/timetable.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Home(),
+      // home: Home(),
+      home: StateTest(),
       routes: {
         '/timetable': (context) => Timetable(),
       },

@@ -8,12 +8,10 @@ class Timetable extends StatefulWidget {
 
 const double CLASS_HEIGHT = 20;
 const double CLASS_WIDTH = 40;
+List week = ['월', '화', '수', '목', '금', '토', '일'];
+var columnLength = 32;
 
 class _TimetableState extends State<Timetable> {
-  List week = ['월', '화', '수', '목', '금', '토', '일'];
-
-  var columnLength = 32;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,31 +70,36 @@ class _TimetableState extends State<Timetable> {
     );
   }
 
-
   // 과목 한 칸
   Widget oneSubject(){
     bool _isClicked = false;
-    return Container(
-      height: CLASS_HEIGHT,
-      width: CLASS_WIDTH,
-      decoration: BoxDecoration(
-        border: Border.all(),
-        color: _isClicked == false ? Colors.blue: Colors.green,
+    return GestureDetector(
+      onTap: (){
+        print("fff");
+        setState(() {
+          _isClicked = true;
+        });
+      },
+      child: Container(
+        height: CLASS_HEIGHT,
+        width: CLASS_WIDTH,
+        decoration: BoxDecoration(
+          border: Border.all(),
+          color: _isClicked == false ? Colors.blue: Colors.green,
+        ),
       ),
     );
   }
 
   // 하루(요일) 시간표 생성
   Widget classesByDay(int index){
-    return GestureDetector(
-
-      onTap: (){
-        print('ff');
-        },
-      child: Column(
+    return Column(
           // crossAxisAlignment: CrossAxisAlignment.center,
-          children: List.generate(columnLength, (index) => oneSubject())
-      ),
+          children: List.generate(columnLength, (index) {
+            return oneSubject();
+          })
+          // children: List.generate(columnLength, (index) => oneSubject())
+      // ),
     );
   }
   // 일주일 컬럼 생성
@@ -106,9 +109,14 @@ class _TimetableState extends State<Timetable> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(week.length, (index) => classesByDay(index))
+          GestureDetector(
+            onTap: (){
+              print("fff");
+            },
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(week.length, (index) => classesByDay(index))
+            ),
           ),
         ],
       ),
