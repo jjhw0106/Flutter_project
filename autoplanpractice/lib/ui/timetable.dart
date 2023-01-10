@@ -1,129 +1,84 @@
 import 'package:flutter/material.dart';
 
-class Timetable extends StatefulWidget {
+class Timetable extends StatelessWidget {
+  const Timetable({Key? key}) : super(key: key);
 
-  @override
-  State<Timetable> createState() => _TimetableState();
-}
-
-const double CLASS_HEIGHT = 20;
-const double CLASS_WIDTH = 40;
-List week = ['월', '화', '수', '목', '금', '토', '일'];
-var columnLength = 32;
-
-class _TimetableState extends State<Timetable> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Provider')),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment : CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 50,
-              width: double.infinity,
-              color: Colors.amberAccent,
-              child: Center(child: Text('시간표',style: TextStyle(fontSize: 30),))),
-            timeBoard(),
-          ],),
-        ),
-      );
-  }
-
-  Widget timeBoard(){
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          // border: Border.
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: dayList(),
-              ),
-              makeColumns()
-            ],
-          ),
-        ),
+      appBar: AppBar(title: Text("Timetable")),
+      body: const Center(
+        child: MyStatefulWidget(),
       ),
     );
   }
-
-  // 상단 요일 리스트
-  List<Widget> dayList(){
-    return List.generate(week.length, (index) => Container(
-      height: CLASS_HEIGHT,
-      width: CLASS_WIDTH,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('${week[index]}')],)
-    )
-    );
-  }
-
-  // 과목 한 칸
-  Widget oneSubject(){
-    bool _isClicked = false;
-    return GestureDetector(
-      onTap: (){
-        print("fff");
-        setState(() {
-          _isClicked = true;
-        });
-      },
-      child: Container(
-        height: CLASS_HEIGHT,
-        width: CLASS_WIDTH,
-        decoration: BoxDecoration(
-          border: Border.all(),
-          color: _isClicked == false ? Colors.blue: Colors.green,
-        ),
-      ),
-    );
-  }
-
-  // 하루(요일) 시간표 생성
-  Widget classesByDay(int index){
-    return Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          children: List.generate(columnLength, (index) {
-            return oneSubject();
-          })
-          // children: List.generate(columnLength, (index) => oneSubject())
-      // ),
-    );
-  }
-  // 일주일 컬럼 생성
-  Widget makeColumns(){
-    return Expanded(
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        children: [
-          GestureDetector(
-            onTap: (){
-              print("fff");
-            },
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(week.length, (index) => classesByDay(index))
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  // Widget changeColor(Colors color){
-  //   return color;
-  // }
 }
 
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  double startYPos = 0;
+  double startXPos = 0;
+  double x=0;
+  double y=0;
+
+  final someWidgetKey = GlobalKey();
+  late Offset position;
+
+  void calculatePosition(PointerDownEvent details) => WidgetsBinding.instance.addPostFrameCallback((_) {
+    RenderBox box = (someWidgetKey.currentContext!.findRenderObject())! as RenderBox;
+    position = box.localToGlobal(Offset.zero);
+    print('시작위치: $position');
+  });
+
+  void updateLocation(PointerEvent details){
+    setState(() {
+      x=details.position.dx;
+      y=details.position.dy;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints.tight(const Size(300, 300)),
+      child: Listener(
+        // onPointerMove: updateLocation,
+        onPointerDown: calculatePosition,
+        child: Container(
+          decoration: const BoxDecoration(color: Colors.blue),
+          height:300,
+          width: 300,
+          child: classes(),
+        ),
+      ),
+    );
+  }
+  Widget classes(){
+    print('x: $x y: $y');
+    return ListView.builder(itemCount:5 , itemBuilder: (context, index) => Container(
+        height:50, decoration: BoxDecoration(color: Colors.red,border: Border.all())),);
+  }
+  void changeColor(double x, double y){
+
+  }
+}
+
+class classes extends StatefulWidget {
+  const classes({Key? key}) : super(key: key);
+
+  @override
+  State<classes> createState() => _classesState();
+}
+
+class _classesState extends State<classes> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
