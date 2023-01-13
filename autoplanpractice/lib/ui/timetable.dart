@@ -1,4 +1,8 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+
+late ScrollController scrollController;
 
 class Timetable extends StatelessWidget {
   const Timetable({Key? key}) : super(key: key);
@@ -31,8 +35,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   double cursorY=0;
   // 현재 커서가 위치한 박스의 인덱스
   int cursorIndex=-1;
+
+  // 위아래 방향 true: 아래/ false: 위
+  bool upDown = true;
+
+  // 이전 좌표 및 인덱스
+  double prevPosY=0;
+  double prevPosX=0;
+
   // 시간표 선택 여부(드래그)
-  List<bool> isSelected = [false, false, false, false, false, false];
+  List<bool> isSelected = List.generate(20, (index) => false);
 
 
   // 글로벌 키를 이용하여 위젯의 시작 시점 구하는 함수
@@ -52,20 +64,63 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   int tempIdx =0;
   bool tempBoolean = false;
+  // List<double> cursorList = List<double>.filled(2, 0,growable: false);
+  Queue<double> cursorTrace = ListQueue<double>();
+  // Queue<double> q = ListQueue<double>();
+  // List<double> q = [];
+
   void updateLocation(PointerEvent details) {
     print("업데이트");
     cursorX=details.position.dx;
     cursorY=details.position.dy;
-    tempIdx = cursorIndex;
 
+    tempIdx = cursorIndex;
     cursorIndex = ((cursorY - startYPos)/50).floor();
-    print('temp: $tempIdx');
+
+
     setState(() {
-      if(tempIdx !=cursorIndex){
-        isSelected[cursorIndex] = !isSelected[cursorIndex];
-      };
+      // 1. 하방 상방 판별
+      checkUpDown();
+      // if(cursorY > )
+      // if(q.first>q.last)
+
+
+      // 2. 인덱스 바꼈을 경우 색상 변경
+      // 2-1. 하방드래그일 경우
+      // cursorIndex>tempIndex 색상 반전
+      if(upDown == true && cursorIndex>tempIdx){
+        isSelected[tempIdx] = !isSelected[cursorIndex];
+      } else if(upDown == false && cursorIndex<tempIdx){
+        isSelected[tempIdx] = !isSelected[cursorIndex];
+      }
+      // 2-2. 상방드래그일 경우
+      // cursorIndex<tempIndex
+      // tempIdx의 색상 반전
+      // if(tempIdx !=cursorIndex){
+      //   isSelected[cursorIndex] = !isSelected[cursorIndex];
+      // };
     });
   }
+
+  void checkUpDown(){
+    cursorTrace.add(cursorY);
+    cursorTrace.length>2?cursorTrace.removeFirst():null;
+
+    if(cursorTrace.first<cursorTrace.last){
+      upDown = true; // 아래로
+    }else {
+      upDown = false; // 위로
+    }
+    print(upDown);
+  }
+
+  // void changeColor(){
+  //   setState(() {
+  //     if(tempIdx !=cursorIndex){
+  //       isSelected[cursorIndex] = !isSelected[cursorIndex];
+  //     };
+  //   });
+  // }
   @override
   void initState() {
     getTablePos(pointerDownEvent);
@@ -78,16 +133,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return ConstrainedBox(
       key: _someWidgetKey,
       constraints: BoxConstraints.tight(const Size(300, 300)),
-      child: Listener(
-
-        onPointerMove: updateLocation,
-        onPointerDown: updateLocation,
-        onPointerUp: (event) {print("$cursorIndex");},
-        child: Container(
-          decoration: const BoxDecoration(color: Colors.blue),
-          height:300,
-          width: 300,
-          child: classes(),
+      child: GestureDetector(
+        onTap: () {
+          print("tapped");
+        },
+        child: Listener(
+          behavior: HitTestBehavior.deferToChild,
+          onPointerMove: updateLocation,
+          // onPointerDown: updateLocation,
+          onPointerUp: (event) {print("$cursorIndex");},// clear position
+          child: Container(
+            decoration: const BoxDecoration(color: Colors.blue),
+            height:300,
+            width: 300,
+            child: classes(),
+          ),
         ),
       ),
     );
@@ -96,7 +156,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget classes(){
     print('인덱스: $cursorIndex x: $cursorX y: $cursorY');
     return ListView.builder(
-      itemCount : 6 ,
+      // controller: scrollController,
+      itemCount : 5,
       itemBuilder : (context, index) {
         return oneClass(index);
       },
