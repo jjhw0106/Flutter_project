@@ -37,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int cursorIndex=-1;
 
   // 위아래 방향 true: 아래/ false: 위
-  bool upDown = false;
+  late bool upDown;
 
   // 이전 좌표 및 인덱스
   double prevPosY=0;
@@ -73,6 +73,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     tempIdx =0;
     cursorIndex = -1;
     cursorTrace.clear();
+    reverseCheck.clear();
   }
   List<int> idxStack = [];
   List<int> idxTempStack = [];
@@ -105,11 +106,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       // 인덱스 바뀌고 reverse가 true면 tempIdx의 색상을 변경하고 reverse를 false로
       // 인덱스 바뀌고 reverse가 false면 cursorIdx만 색상 변경
 
-      reverseYn= checkReverse();
+
+      reverseYn= checkReverse(upDown?true:false);
       reverseYn?print("역방향"):print("정방향");
-      if(tempIdx !=cursorIndex){
+      if(!reverseYn && tempIdx !=cursorIndex){
         isSelected[cursorIndex] = !isSelected[cursorIndex];
-      }else if(tempIdx !=cursorIndex){
+        isSelected[tempIdx] = isSelected[cursorIndex];
+      }else if(reverseYn && tempIdx !=cursorIndex){
         isSelected[tempIdx] = !isSelected[tempIdx];
         // reverse = !reverse;
       }
@@ -125,10 +128,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
     });
   }
-  bool checkReverse(){
+  bool checkReverse(bool result){
     // false : 방향 유지 - true : 방향 전환
     // upDown : true(아래) - false(위)
-    bool result = false;
+    // bool result = false;
+    if(reverseCheck.length==0) {
+      reverseCheck.add(upDown);
+    }
     if(tempIdx != cursorIndex) {
       reverseCheck.add(upDown);
       if(reverseCheck.length>2) reverseCheck.removeFirst();
@@ -148,10 +154,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     cursorTrace.add(cursorY);
     cursorTrace.length>2?cursorTrace.removeFirst():null;
 
-    if(cursorTrace.first<cursorTrace.last ){
-      upDown = true; // 아래로
-    }else {
-      upDown = false; // 위로
+    if(cursorTrace.length>1) {
+      if (cursorTrace.first < cursorTrace.last) {
+        upDown = true; // 아래로
+      } else {
+        upDown = false; // 위로
+      }
     }
   }
 
