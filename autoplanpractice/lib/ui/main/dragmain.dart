@@ -1,6 +1,7 @@
 import 'package:autoplanpractice/ui/drag_table/example1.dart';
 import 'package:autoplanpractice/ui/drag_table/example2.dart';
 import 'package:autoplanpractice/ui/drag_table/example3.dart';
+import 'package:autoplanpractice/ui/drag_table/example4.dart';
 import 'package:autoplanpractice/ui/drag_table/gpt_example.dart';
 import 'package:autoplanpractice/ui/timetable.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class DragTable extends StatelessWidget {
       // appBar: AppBar(
       //   title: Text('Drag Example'),
       // ),
-      body: Timetable(),
+      body: Example4(),
       // body: Example3(),
     );
   }

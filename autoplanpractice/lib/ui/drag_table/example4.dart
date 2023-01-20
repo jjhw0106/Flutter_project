@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 late ScrollController scrollController;
 
-class Timetable extends StatelessWidget {
-  const Timetable({Key? key}) : super(key: key);
+class Example4 extends StatelessWidget {
+  const Example4({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int cursorIndex=-1;
 
   // 위아래 방향 true: 아래/ false: 위
-  bool upDown = true;
+  late bool upDown;
 
   // 이전 좌표 및 인덱스
   double prevPosY=0;
@@ -46,6 +46,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   // 시간표 선택 여부(드래그)
   List<bool> isSelected = List.generate(20, (index) => false);
 
+  // reverse 체크
+  Queue<bool> reverseCheck = ListQueue<bool>();
+  bool reverseYn=false;
 
   // 글로벌 키를 이용하여 위젯의 시작 시점 구하는 함수
   final _someWidgetKey = GlobalKey();
@@ -64,13 +67,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   int tempIdx =0;
   bool tempBoolean = false;
-  // List<double> cursorList = List<double>.filled(2, 0,growable: false);
   Queue<double> cursorTrace = ListQueue<double>();
-  // Queue<double> q = ListQueue<double>();
-  // List<double> q = [];
 
+  void initLocation(PointerEvent details){
+    tempIdx =0;
+    cursorIndex = -1;
+    cursorTrace.clear();
+    reverseCheck.clear();
+  }
+  List<int> idxStack = [];
+  List<int> idxTempStack = [];
+  // void changeCursorIdx(){
+  //   if()
+  //
+  // }
   void updateLocation(PointerEvent details) {
-    print("업데이트");
     cursorX=details.position.dx;
     cursorY=details.position.dy;
 
@@ -90,36 +101,68 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       // 2-2. 상방드래그일 경우
       // cursorIndex<tempIndex
       // tempIdx의 색상 반전
-      if(upDown == true && cursorIndex>tempIdx){
-        isSelected[tempIdx] = !isSelected[cursorIndex];
-      } else if(upDown == false && cursorIndex<tempIdx){
-        isSelected[tempIdx] = !isSelected[cursorIndex];
-      }
-      if(tempIdx !=cursorIndex){
+
+      // bool reverse = false;
+      // 인덱스 바뀌고 reverse가 true면 tempIdx의 색상을 변경하고 reverse를 false로
+      // 인덱스 바뀌고 reverse가 false면 cursorIdx만 색상 변경
+
+
+      reverseYn= checkReverse(upDown?true:false);
+      reverseYn?print("역방향"):print("정방향");
+      if(!reverseYn && tempIdx !=cursorIndex){
         isSelected[cursorIndex] = !isSelected[cursorIndex];
-      };
+        isSelected[tempIdx] = isSelected[cursorIndex];
+      }else if(reverseYn && tempIdx !=cursorIndex){
+        isSelected[tempIdx] = !isSelected[tempIdx];
+        // reverse = !reverse;
+      }
+      //하방 드래그
+      // if(upDown == true && cursorIndex>tempIdx){
+      //   print("check1");
+      //   isSelected[tempIdx] = isSelected[cursorIndex];
+      //
+      // } else if(upDown == false && cursorIndex<tempIdx){
+      //   print("check2");
+      //   isSelected[tempIdx] = isSelected[cursorIndex];
+      // }
+
     });
+  }
+  bool checkReverse(bool result){
+    // false : 방향 유지 - true : 방향 전환
+    // upDown : true(아래) - false(위)
+    // bool result = false;
+    if(reverseCheck.length==0) {
+      reverseCheck.add(upDown);
+    }
+    if(tempIdx != cursorIndex) {
+      reverseCheck.add(upDown);
+      if(reverseCheck.length>2) reverseCheck.removeFirst();
+    }
+    //같은방향
+    if(reverseCheck.length>=2 && reverseCheck.first == reverseCheck.last){
+      // reverseCheck.removeFirst();
+    print('$cursorIndex, $tempIdx , reverse: $reverseCheck');
+      return false;
+    }
+    print('$cursorIndex, $tempIdx , reverse: $reverseCheck');
+
+    return result;
   }
 
   void checkUpDown(){
     cursorTrace.add(cursorY);
     cursorTrace.length>2?cursorTrace.removeFirst():null;
 
-    if(cursorTrace.first<cursorTrace.last){
-      upDown = true; // 아래로
-    }else {
-      upDown = false; // 위로
+    if(cursorTrace.length>1) {
+      if (cursorTrace.first < cursorTrace.last) {
+        upDown = true; // 아래로
+      } else {
+        upDown = false; // 위로
+      }
     }
-    print(upDown);
   }
 
-  // void changeColor(){
-  //   setState(() {
-  //     if(tempIdx !=cursorIndex){
-  //       isSelected[cursorIndex] = !isSelected[cursorIndex];
-  //     };
-  //   });
-  // }
   @override
   void initState() {
     getTablePos(pointerDownEvent);
@@ -140,7 +183,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           behavior: HitTestBehavior.deferToChild,
           onPointerMove: updateLocation,
           // onPointerDown: updateLocation,
-          onPointerUp: (event) {print("$cursorIndex");},// clear position
+          onPointerUp: initLocation,// clear position
           child: Container(
             decoration: const BoxDecoration(color: Colors.blue),
             height:300,
@@ -153,10 +196,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   }
 
   Widget classes(){
-    print('인덱스: $cursorIndex x: $cursorX y: $cursorY');
     return ListView.builder(
       // controller: scrollController,
-      itemCount : 5,
+      itemCount : 6,
       itemBuilder : (context, index) {
         return oneClass(index);
       },
