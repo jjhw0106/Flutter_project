@@ -52,9 +52,9 @@ class MyButton extends StatelessWidget {
           backgroundColor: backgroundColor,
           side: BorderSide(width: 0.5),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(radius),
-              )
+            borderRadius: BorderRadius.all(
+              Radius.circular(radius),
+            )
           ),
         ),
       ),
