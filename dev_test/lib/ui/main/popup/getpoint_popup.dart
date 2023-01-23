@@ -2,16 +2,16 @@ import 'package:dev_test/ui/main/model/popup_model.dart';
 import 'package:flutter/material.dart';
 
 
-  late String alarmTitle = "꽝!";
-  final String alarmContents1 = "아쉽게도 꽝이네요";
-  final String alarmContents2 = "다음 기회에 도전해보세요!";
-  final String alarmContents3 = '';
+late String alarmTitle = "꽝!";
+late String alarmContents1 = "아쉽게도 꽝이네요";
+late String alarmContents2 = "다음 기회에 도전해보세요!";
+late String alarmContents3 = '';
 
 class GetPointDialog extends StatelessWidget {
   GetPointDialog({super.key});
 
   // 내장에서 get?
-  DialogMessage dialogMessage = DialogMessage(alarmTitle, "아쉽게도 꽝이네요", );
+  DialogMessage dialogMessage = DialogMessage(alarmTitle, alarmContents1, contents2: alarmContents2, contents3: alarmContents3 );
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +23,12 @@ class GetPointDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _getCloseButton(context),
-          Image.asset('assets/images/bomb.png', width: 24.3, height: 23.7),
+          Image.asset('assets/images/bomb.png', width: 100, height: 100),
           Center(child: Text(dialogMessage.title)),
           Center(child: Column(
               children:<Widget> [
                 Text(dialogMessage.contents1!),
-                Text(dialogMessage.contents1!),
+                Text(dialogMessage.contents2!),
                 alarmContents3.isEmpty ? SizedBox(): Text(alarmContents3),
               ]
           )),
