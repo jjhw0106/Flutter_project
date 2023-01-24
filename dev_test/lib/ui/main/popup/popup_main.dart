@@ -2,8 +2,10 @@ import 'package:dev_test/ui/main/popup/getpoint_popup.dart';
 import 'package:flutter/material.dart';
 
 class PopupMain extends StatelessWidget {
-  const PopupMain({Key? key}) : super(key: key);
+  // const PopupMain({Key? key}) : super(key: key);
 
+  int pointType=1;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
