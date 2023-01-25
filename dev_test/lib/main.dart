@@ -1,7 +1,7 @@
 import 'package:dev_test/ui/main/popup/popup_main.dart';
 import 'package:flutter/material.dart';
 
-void main(){
+void main() {
   runApp(const myApp());
 }
 
