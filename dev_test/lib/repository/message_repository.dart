@@ -1,8 +1,6 @@
-import 'package:dev_test/ui/main/model/message.dart';
-import "package:flutter/material.dart";
+import 'package:dev_test/data/model/message.dart';
 
 class MessageRepository {
   MessageRepository();
   late List<Message> messageList;
-
 }
