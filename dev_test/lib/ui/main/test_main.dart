@@ -44,7 +44,7 @@ class _TestMainState extends State<TestMain> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SetStudyType(),
+                      builder: (context) => SetStudyType(),
                     ),
                   );
                 },
