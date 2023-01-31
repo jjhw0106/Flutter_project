@@ -18,7 +18,7 @@ class _PopupMainState extends State<PopupMain> {
     // TODO: implement dispose
     super.dispose();
   }
-  TestController controller = TestController();
+  PointDialogController controller = PointDialogController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _PopupMainState extends State<PopupMain> {
                 // 포인트 저장 메소드-> 저장성공시 아래 진행(validation)
                 // 메시지 전달
                 // print(controller.pointType);
-              onPressed: callDialog,
+              onPressed: () => controller.callDialog(context),
               child: const ButtonBar(
                 children: [
                   Text("버튼")
@@ -59,16 +59,6 @@ class _PopupMainState extends State<PopupMain> {
           ],
         ),
       ),
-    );
-  }
-  void callDialog() async {
-    Message msg = await controller.getMessage();
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return GetPointDialog(msg);
-      },
     );
   }
 }
