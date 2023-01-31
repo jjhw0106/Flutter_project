@@ -1,14 +1,15 @@
 import 'package:dev_test/controller/point_dialog_controller.dart';
+import 'package:dev_test/ui/workbook/set_study_type.dart';
 import 'package:flutter/material.dart';
 
-class PopupMain extends StatefulWidget {
-  const PopupMain({super.key});
+class TestMain extends StatefulWidget {
+  const TestMain({super.key});
 
   @override
-  State<PopupMain> createState() => _PopupMainState();
+  State<TestMain> createState() => _TestMainState();
 }
 
-class _PopupMainState extends State<PopupMain> {
+class _TestMainState extends State<TestMain> {
   // const PopupMain({Key? key}) : super(key: key);
   @override
   void dispose() {
@@ -31,12 +32,22 @@ class _PopupMainState extends State<PopupMain> {
                 // 포인트 저장 메소드-> 저장성공시 아래 진행(validation)
                 // 메시지 전달
                 // print(controller.pointType);
-                onPressed: () => controller.callDialog(context),
+                onPressed: () {
+                  print("callDialog!!");
+                  controller.callDialog(context);
+                },
                 child: const ButtonBar(
                   children: [Text("버튼")],
                 )),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SetStudyType(),
+                    ),
+                  );
+                },
                 child: const ButtonBar(
                   children: [Text("버튼")],
                 )),

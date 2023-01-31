@@ -1,24 +1,23 @@
-import 'package:dev_test/controller/point_dialog_controller.dart';
 import 'package:dev_test/data/model/message.dart';
 import 'package:flutter/material.dart';
 
-int messageType = -1;
-String alarmTitle = "";
-String? alarmContents1 = "";
-String? alarmContents2 = "";
-String? alarmContents3 = "";
+int messageType = 0/*=1*/;
+String alarmTitle = "" /*= "꽝!"*/;
+String? alarmContents1/*= "아쉽게도 꽝이네요"*/;
+String? alarmContents2/*= "다음 기회에 도전해보세요!"*/;
+String? alarmContents3/*= ''*/;
 
-PointDialogController controller = PointDialogController();
-
-// 호출하면 메시지 타입 및 내용 대입
-class GetPointDialog extends StatelessWidget {
-  GetPointDialog(Message msg, {super.key}) {
+class PointDialog extends StatelessWidget {
+  PointDialog(Message msg, {super.key}) {
     messageType = msg.pointType;
     alarmTitle = msg.title;
     alarmContents1 = msg.contents1;
     alarmContents2 = msg.contents2;
     alarmContents3 = msg.contents3;
   }
+
+  // 내장에서 get?
+  // Message dialogMessage = Message(messageType, alarmTitle, alarmContents1, contents2: alarmContents2, contents3: alarmContents3 );
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +30,7 @@ class GetPointDialog extends StatelessWidget {
         children: [
           _getCloseButton(context),
           Image.asset('assets/images/bomb.png', width: 100, height: 100),
-          Center(
-            child: Text(
-              alarmTitle,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ),
-          ),
+          Center(child: Text(alarmTitle)),
           Center(
               child: Column(children: <Widget>[
             Text(alarmContents1!),
@@ -56,16 +50,6 @@ class GetPointDialog extends StatelessWidget {
     );
   }
 
-  // void callDialog(context) async {
-  //   Message msg = await controller.getMessage();
-  //   showDialog(
-  //     context: context,
-  //     barrierDismissible: true,
-  //     builder: (context) {
-  //       return GetPointDialog(msg);
-  //     },
-  //   );
-  // }
   _getCloseButton(context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),

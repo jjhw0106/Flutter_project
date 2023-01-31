@@ -1,17 +1,17 @@
-import 'package:dev_test/ui/main/popup/popup_main.dart';
+import 'package:dev_test/ui/main/test_main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const myApp());
+  runApp(const MyApp());
 }
 
-class myApp extends StatelessWidget {
-  const myApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PopupMain(),
+    return const MaterialApp(
+      home: TestMain(),
     );
   }
 }
