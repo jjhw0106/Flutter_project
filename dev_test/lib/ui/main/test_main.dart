@@ -10,14 +10,15 @@ class TestMain extends StatefulWidget {
 }
 
 class _TestMainState extends State<TestMain> {
-  // const PopupMain({Key? key}) : super(key: key);
+  
+  PointDialogController controller = PointDialogController();
+  
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
   }
 
-  PointDialogController controller = PointDialogController();
 
   @override
   Widget build(BuildContext context) {

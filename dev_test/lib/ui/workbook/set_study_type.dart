@@ -52,7 +52,7 @@ class _SetStudyTypeState extends State<SetStudyType> {
               Text("ff"),
               Text("ff"),
             ],
-          )
+          ),
         ],
       ),
     );
