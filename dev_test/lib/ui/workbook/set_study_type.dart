@@ -1,3 +1,4 @@
+import 'package:dev_test/controller/workbook/set_study_controller.dart';
 import 'package:flutter/material.dart';
 
 class SetStudyType extends StatefulWidget {
@@ -11,9 +12,9 @@ class SetStudyType extends StatefulWidget {
 
 class _SetStudyTypeState extends State<SetStudyType> {
   final _textController = TextEditingController();
-
-  List<String> searchTextList = [];
-
+  final _studyController = SetStudyController();
+  // List<String> searchTextList = [];
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +25,8 @@ class _SetStudyTypeState extends State<SetStudyType> {
           TextField(
             controller: _textController,
             onSubmitted: (value) {
-              searchTextList.add(value);
-              print(searchTextList.length);
+              _studyController.searchTextList.add(value);
+              setState(() {});
             },
             // onChanged: (value) {},
             decoration: const InputDecoration(
@@ -38,10 +39,11 @@ class _SetStudyTypeState extends State<SetStudyType> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: searchTextList.length,
+              itemCount: _studyController.searchTextList.length,
               itemBuilder: (context, index) {
-                return Text("$index");
+                return Text(_studyController.searchTextList[index]);
               },
+              
             ),
           ),
           Row(
@@ -50,7 +52,7 @@ class _SetStudyTypeState extends State<SetStudyType> {
               Text("ff"),
               Text("ff"),
             ],
-          )
+          ),
         ],
       ),
     );
