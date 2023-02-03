@@ -1,23 +1,21 @@
-import 'package:dev_test/data/model/message.dart';
 import 'package:flutter/material.dart';
+import 'package:our_school_client/data/model/point_dialog_message.dart';
 
-int messageType = 0/*=1*/;
-String alarmTitle = "" /*= "꽝!"*/;
-String? alarmContents1/*= "아쉽게도 꽝이네요"*/;
-String? alarmContents2/*= "다음 기회에 도전해보세요!"*/;
-String? alarmContents3/*= ''*/;
+// 메시지 가져오는 방법에 대한 고민 필요
+int messageType = 0;
+String alarmTitle = "";
+String? alarmContents1;
+String? alarmContents2;
+String? alarmContents3;
 
 class PointDialog extends StatelessWidget {
-  PointDialog(Message msg, {super.key}) {
+  PointDialog(PointDialogMessage msg, {super.key}) {
     messageType = msg.pointType;
     alarmTitle = msg.title;
     alarmContents1 = msg.contents1;
     alarmContents2 = msg.contents2;
     alarmContents3 = msg.contents3;
   }
-
-  // 내장에서 get?
-  // Message dialogMessage = Message(messageType, alarmTitle, alarmContents1, contents2: alarmContents2, contents3: alarmContents3 );
 
   @override
   Widget build(BuildContext context) {
