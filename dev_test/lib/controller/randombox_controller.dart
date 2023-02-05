@@ -1,6 +1,5 @@
+import 'package:dev_test/data/model/point_dialog_message.dart';
 import 'package:flutter/material.dart';
-
-import '../data/model/point_dialog_message.dart';
 
 class RandomBoxController with ChangeNotifier {
   // 규식피디님이 포인트 로직 담당
@@ -15,31 +14,31 @@ class RandomBoxController with ChangeNotifier {
   // }
   // TestRepository repository;
   // PointDialogController(this.repository);
-  int pointType = 0;
-  String title = "꽝!";
-  String contents1 = "아쉽게도 꽝이네요";
-  String contents2 = "다음 기회에 도전해보세요!";
-  String contents3 = "";
+  // int pointType = 0;
+  // String title = "꽝!";
+  // String contents1 = "아쉽게도 꽝이네요";
+  // String contents2 = "다음 기회에 도전해보세요!";
+  // String contents3 = "";
+
+  late final PointDialogMessage _message;
+  RandomBoxController({required PointDialogMessage message})
+      : _message = message;
+
   bool isLoading = false;
-
-  late PointDialogMessage message;
-
-  List messageList = [];
 
   void onInit(context) {
     isLoading = true;
-    getMessage();
     notifyListeners();
   }
 
   // void insertPoint(){}
   PointDialogMessage getMessage() {
-    if (pointType == 0) {
-      message = PointDialogMessage(pointType, title, contents1,
-          contents2: contents2, contents3: contents3);
+    if (_message.pointType == 0) {
+      // message = PointDialogMessage(pointType, headline6, contents1,
+      //     contents2: contents2, contents3: contents3);
       isLoading = false;
-      return message;
+      return _message;
     }
-    return message;
+    return _message;
   }
 }

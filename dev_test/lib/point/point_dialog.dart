@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:our_school_client/data/model/point_dialog_message.dart';
+
+import '../data/model/point_dialog_message.dart';
 
 // 메시지 가져오는 방법에 대한 고민 필요
 int messageType = 0;
