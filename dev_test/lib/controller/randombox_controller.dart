@@ -21,8 +21,7 @@ class RandomBoxController with ChangeNotifier {
   // String contents3 = "";
 
   late final PointDialogMessage _message;
-  RandomBoxController({required PointDialogMessage message})
-      : _message = message;
+  RandomBoxController(this._message);
 
   bool isLoading = false;
 

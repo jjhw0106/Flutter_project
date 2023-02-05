@@ -1,10 +1,9 @@
-class PointDialogMessage {
-  int pointType;
-  String title;
-  String? contents1;
-  String? contents2;
-  String? contents3;
+import 'package:flutter/cupertino.dart';
 
-  PointDialogMessage(this.pointType, this.title, this.contents1,
-      {this.contents2, this.contents3});
+class PointDialogMessage with ChangeNotifier {
+  int? pointType = 0;
+  String? title = "a";
+  String? contents1 = "b";
+  String? contents2 = "c";
+  String? contents3 = "d";
 }
