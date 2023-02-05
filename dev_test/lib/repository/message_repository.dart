@@ -1,6 +1,6 @@
-import 'package:dev_test/data/model/message.dart';
+import 'package:dev_test/data/model/point_dialog_message.dart';
 
 class MessageRepository {
   MessageRepository();
-  late List<Message> messageList;
+  late List<PointDialogMessage> messageList;
 }
