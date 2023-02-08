@@ -5,7 +5,7 @@ class SetStudyType extends StatefulWidget {
   // const SetStudyType({super.key});
 
   const SetStudyType({super.key});
-
+  
   @override
   State<SetStudyType> createState() => _SetStudyTypeState();
 }
@@ -37,13 +37,13 @@ class _SetStudyTypeState extends State<SetStudyType> {
               suffixIcon: Icon(Icons.search),
             ),
           ),
+          Text('ff'),
           Expanded(
             child: ListView.builder(
               itemCount: _studyController.searchTextList.length,
               itemBuilder: (context, index) {
                 return Text(_studyController.searchTextList[index]);
               },
-              
             ),
           ),
           Row(

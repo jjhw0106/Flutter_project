@@ -1,28 +1,83 @@
+import 'dart:io';
+
 import 'package:dev_test/controller/point/randombox_controller.dart';
 import 'package:dev_test/data/model/point_dialog_message.dart';
 import 'package:dev_test/ui/point/random_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'ui/home.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   static final providers = [
     ChangeNotifierProvider<RandomBoxController>(create: (_) => RandomBoxController(PointDialogMessage()))
   ]; 
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: providers,
+      providers: MyApp.providers,
       child: const MaterialApp (
         home: Home(),
       ),
     );
   }
 }
+
+// build안에서 dotenv.get이 안되는 이유 해결안됨 -> 라이프사이클 문제인듯
+// dotenv.get이 수행되는 시점에 main의 dotenv.load가 시행 안된 상태일 수 있다
+// -> 의문 runApp위에서 await걸었는데?
+// import 'dart:io';
+
+// import 'package:dev_test/controller/point/randombox_controller.dart';
+// import 'package:dev_test/data/model/point_dialog_message.dart';
+// import 'package:dev_test/ui/point/random_box.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:provider/provider.dart';
+
+// import 'ui/home.dart';
+
+// Future<void> main() async {
+//   await dotenv.load(fileName: ".env");
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatefulWidget {
+//   static final providers = [
+//     ChangeNotifierProvider<RandomBoxController>(create: (_) => RandomBoxController(PointDialogMessage()))
+//   ]; 
+//   const MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<MyApp> {
+
+//   @override
+//   Widget build(BuildContext context) {
+//     print("check");
+//     print(dotenv);
+//     String appName = dotenv.get('KAKAO_API_KEY');
+//     return MultiProvider(
+//       providers: MyApp.providers,
+//       child: const MaterialApp (
+//         home: Home(),
+//       ),
+//     );
+//   }
+// }
