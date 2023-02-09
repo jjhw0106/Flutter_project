@@ -8,7 +8,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String appName = dotenv.get("KAKAO_REST_KEY");
+    
     return Scaffold(
       appBar: AppBar(title: const Text("Home")),
       body: Center(
@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
           children: [
             ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const RandomBox()));
-            }, child: Text(appName)),
+            }, child: const Text("RandomBox")),
             ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const SetStudyType()));
             }, child: const Text("SetStudytype"))
