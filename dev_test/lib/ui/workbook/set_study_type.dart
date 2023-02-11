@@ -1,5 +1,4 @@
 import 'package:dev_test/controller/workbook/set_study_controller.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +14,16 @@ class SetStudyType extends StatefulWidget {
 
 class _SetStudyTypeState extends State<SetStudyType> {
   final _textController = TextEditingController();
-  
+  late SetStudyController studyController;
   String appName = dotenv.get("KAKAO_REST_KEY");
-  
+  @override
+  void initState() {
+    super.initState();
+    studyController = Provider.of<SetStudyController>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final studyController = Provider.of<SetStudyController>(context, listen:false);
     return Scaffold(
       appBar: AppBar(title: const Text("Search Subject!!")),
       body: Column(
