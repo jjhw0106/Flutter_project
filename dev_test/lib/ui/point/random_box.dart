@@ -1,6 +1,7 @@
-import 'package:dev_test/controller/randombox_controller.dart';
-import 'package:dev_test/point/point_dialog.dart';
+import 'package:dev_test/controller/point/randombox_controller.dart';
+import 'package:dev_test/ui/point/point_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 class RandomBox extends StatelessWidget {
@@ -10,6 +11,8 @@ class RandomBox extends StatelessWidget {
   Widget build(BuildContext context) {
     RandomBoxController controller =
         Provider.of<RandomBoxController>(context, listen: false);
+        context.watch<RandomBoxController>();
+    String appName = dotenv.get("KAKAO_REST_KEY");
     return Scaffold(
       appBar: AppBar(
         title: const Text('팝업메뉴'),
