@@ -15,11 +15,18 @@ class SetStudyType extends StatefulWidget {
 class _SetStudyTypeState extends State<SetStudyType> {
   final _textController = TextEditingController();
   late SetStudyController studyController;
+  late dynamic bookList;
   String appName = dotenv.get("KAKAO_REST_KEY");
   @override
   void initState() {
     super.initState();
+    init();
+  }
+
+  void init() async {
     studyController = Provider.of<SetStudyController>(context, listen: false);
+    bookList = await studyController.setBookInfoList();
+    // print(studyController.searchTextList);
   }
 
   @override
@@ -33,7 +40,7 @@ class _SetStudyTypeState extends State<SetStudyType> {
             controller: _textController,
             onSubmitted: (value) {
               // studyController.searchTextList.add(value);
-              studyController.setBookInfosList();
+              studyController.setBookInfoList();
               _textController.text = '';
               setState(() {});
             },
@@ -47,14 +54,14 @@ class _SetStudyTypeState extends State<SetStudyType> {
             ),
           ),
           Text(appName),
-          Expanded(
-            child: ListView.builder(
-              itemCount: studyController.searchTextList.length,
-              itemBuilder: (context, index) {
-                return Text(studyController.searchTextList[index]);
-              },
-            ),
-          ),
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: studyController.searchTextList.length,
+          //     itemBuilder: (context, index) {
+          //       return Text(studyController.searchTextList);
+          //     },
+          //   ),
+          // ),
           Row(
             children: const [
               Text("ff"),
