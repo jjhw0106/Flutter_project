@@ -7,6 +7,15 @@ class SetStudyController with ChangeNotifier {
 
   SetStudyController(this.setStudyRepository);
 
+  bool isLoading = true;
+
+  void onInit(context) async {
+    await setBookInfoList();
+    if (searchTextList != null) isLoading = false;
+
+    notifyListeners();
+  }
+
   Future<dynamic> setBookInfoList() async {
     print("controller!!");
     searchTextList = await setStudyRepository.getBookInfos();
