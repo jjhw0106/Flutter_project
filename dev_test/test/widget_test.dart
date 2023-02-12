@@ -19,9 +19,12 @@ Future<void> searchBooks() async {
     ),
   );
   try {
-    final response = await dio.get('https://dapi.kakao.com/v3/search/book',
+    Response<dynamic> response = await dio.get(
+        'https://dapi.kakao.com/v3/search/book',
         queryParameters: {"query": "미움받을"});
+    Map<String, dynamic> data = response.data;
     print(response.data);
+    print(data);
   } catch (e) {
     print("에러 $e");
   }
