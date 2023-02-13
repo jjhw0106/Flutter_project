@@ -25,7 +25,8 @@ class _SetStudyTypeState extends State<SetStudyType> {
 
   void init() async {
     studyController = Provider.of<SetStudyController>(context, listen: false);
-    bookList = await studyController.setBookInfoList();
+    // bookList = await studyController.setBookInfoList();
+    studyController.onInit;
     // print(studyController.searchTextList);
   }
 
@@ -33,44 +34,52 @@ class _SetStudyTypeState extends State<SetStudyType> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Search Subject!!")),
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          TextField(
-            controller: _textController,
-            onSubmitted: (value) {
-              // studyController.searchTextList.add(value);
-              studyController.setBookInfoList();
-              _textController.text = '';
-              setState(() {});
-            },
-            // onChanged: (value) {},
-            decoration: const InputDecoration(
-              hintText: "찾으실 교재명을 적어주세요",
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
+      body: !studyController.isLoading
+          ? Column(
+              children: [
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _textController,
+                  onSubmitted: (value) {
+                    // studyController.searchTextList.add(value);
+                    studyController.setBookInfoList();
+                    _textController.text = '';
+                    setState(() {});
+                  },
+                  // onChanged: (value) {},
+                  decoration: const InputDecoration(
+                    hintText: "찾으실 교재명을 적어주세요",
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    suffixIcon: Icon(Icons.search),
+                  ),
+                ),
+                Text(appName),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: studyController.searchTextList.length,
+                    itemBuilder: (context, index) {
+                      return Text(studyController.searchTextList);
+                    },
+                  ),
+                ),
+                Row(
+                  children: const [
+                    Text("ff"),
+                    Text("ff"),
+                    Text("ff"),
+                  ],
+                ),
+              ],
+            )
+          : const Center(
+              child: CircularProgressIndicator(
+                // https://stackoverflow.com/questions/49952048/how-to-change-color-of-circularprogressindicator
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xffffffff)),
+                strokeWidth: 10.0,
               ),
-              suffixIcon: Icon(Icons.search),
             ),
-          ),
-          Text(appName),
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemCount: studyController.searchTextList.length,
-          //     itemBuilder: (context, index) {
-          //       return Text(studyController.searchTextList);
-          //     },
-          //   ),
-          // ),
-          Row(
-            children: const [
-              Text("ff"),
-              Text("ff"),
-              Text("ff"),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }
