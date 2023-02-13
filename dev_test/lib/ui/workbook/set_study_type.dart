@@ -20,18 +20,13 @@ class _SetStudyTypeState extends State<SetStudyType> {
   @override
   void initState() {
     super.initState();
-    init();
-  }
-
-  void init() async {
     studyController = Provider.of<SetStudyController>(context, listen: false);
-    // bookList = await studyController.setBookInfoList();
-    studyController.onInit;
-    // print(studyController.searchTextList);
+    studyController.onInit(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    studyController = context.watch<SetStudyController>();
     return Scaffold(
       appBar: AppBar(title: const Text("Search Subject!!")),
       body: !studyController.isLoading
@@ -42,7 +37,7 @@ class _SetStudyTypeState extends State<SetStudyType> {
                   controller: _textController,
                   onSubmitted: (value) {
                     // studyController.searchTextList.add(value);
-                    studyController.setBookInfoList();
+                    studyController.setBookInfoList(_textController.text);
                     _textController.text = '';
                     setState(() {});
                   },
@@ -60,23 +55,16 @@ class _SetStudyTypeState extends State<SetStudyType> {
                   child: ListView.builder(
                     itemCount: studyController.searchTextList.length,
                     itemBuilder: (context, index) {
-                      return Text(studyController.searchTextList);
+                      return Text(studyController.searchTextList['documents'][0]['title'][0]);
                     },
                   ),
                 ),
-                Row(
-                  children: const [
-                    Text("ff"),
-                    Text("ff"),
-                    Text("ff"),
-                  ],
-                ),
               ],
-            )
+            ) 
           : const Center(
               child: CircularProgressIndicator(
                 // https://stackoverflow.com/questions/49952048/how-to-change-color-of-circularprogressindicator
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xffffffff)),
+                valueColor: AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 175, 45, 45)),
                 strokeWidth: 10.0,
               ),
             ),

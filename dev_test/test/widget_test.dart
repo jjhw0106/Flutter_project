@@ -23,8 +23,7 @@ Future<void> searchBooks() async {
         'https://dapi.kakao.com/v3/search/book',
         queryParameters: {"query": "미움받을"});
     Map<String, dynamic> data = response.data;
-    print(response.data);
-    print(data);
+    print(data["documents"]);
   } catch (e) {
     print("에러 $e");
   }

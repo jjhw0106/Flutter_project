@@ -4,8 +4,8 @@ class SetStudyRepository {
   final SetStudyProvider _setStudyProvider;
   SetStudyRepository(this._setStudyProvider);
 
-  Future<dynamic> getBookInfos() async {
+  Future<dynamic> getBookInfos(String? title) async {
     print("repository!!");
-    return await _setStudyProvider.getBooksFromKakao();
+    return _setStudyProvider.getBooksFromKakao(title);
   }
 }
