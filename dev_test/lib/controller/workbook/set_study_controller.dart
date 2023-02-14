@@ -13,8 +13,11 @@ class SetStudyController with ChangeNotifier {
   Future<void> onInit(context) async {
     isLoading=true;
     print("controller setting...");
-    await setBookInfoList(title);
-    notifyListeners();
+    searchTextList = <dynamic>[];
+    isLoading =false; 
+    print("isLoading: $isLoading" );
+    // await setBookInfoList(title);
+    // notifyListeners();
   }
 
   Future<dynamic> setBookInfoList(String? title) async {

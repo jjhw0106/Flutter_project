@@ -7,6 +7,7 @@ void main() async {
 Future<void> searchBooks() async {
   Dio dio = Dio();
   const String KAKAO_KEY = 'caaf835809f37a3a4ba57138eb4e9b99';
+  List<dynamic> searchTextList; 
 
   dio.interceptors.add(
     InterceptorsWrapper(
@@ -23,7 +24,8 @@ Future<void> searchBooks() async {
         'https://dapi.kakao.com/v3/search/book',
         queryParameters: {"query": "미움받을"});
     Map<String, dynamic> data = response.data;
-    print(data["documents"]);
+    searchTextList = data["documents"];
+    print(searchTextList[0]);
   } catch (e) {
     print("에러 $e");
   }
