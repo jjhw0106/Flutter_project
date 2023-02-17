@@ -1,15 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class SetStudyProvider {
-  // dbhelper
-
+class StudyEnrollmentProvider {
   // 카카오 책정보 불러오기
-  Future<dynamic> getBooksFromKakao() async {
+  Future<List<dynamic>> getBooksFromKakao(String? title) async {
     // API 연결 위한 DIO
     Dio dio = Dio();
-    String kakaoKey = dotenv.get("KAKAO_REST_KEY");
-    print("provider!!");
+    String kakaoKey = dotenv.get('KAKAO_RESTAPI_KEY');
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
@@ -19,12 +16,12 @@ class SetStudyProvider {
       ),
     );
     try {
-      final response = await dio.get('https://dapi.kakao.com/v3/search/book',
-          queryParameters: {"query": '미움받을'});
-      print("응답: ${response.data}");
-      return response.data;
+      Response<dynamic> response = await dio.get('https://dapi.kakao.com/v3/search/book', queryParameters: {"query": '$title', 'sort': 'accuracy','size': 50,});
+      Map<String, dynamic> data = response.data;
+      print("API Connected");
+      return data["documents"];
     } catch (e) {
-      print("에러 $e");
+      print("API Error: $e");
       throw Exception();
     }
   }
