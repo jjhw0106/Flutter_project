@@ -2,10 +2,10 @@ import 'package:dev_test/data/repository/study_enrollment_repository.dart';
 import 'package:flutter/cupertino.dart';
 
 class StudyEnrollmentController with ChangeNotifier {
-  late List<dynamic> searchTextList;
-  final StudyEnrollmentRepository setStudyRepository;
+  late dynamic searchTextList;
+  final StudyEnrollmentRepository studyEnrollmentRepository;
 
-  StudyEnrollmentController(this.setStudyRepository);
+  StudyEnrollmentController(this.studyEnrollmentRepository);
 
   bool isLoading = false;
   String title = "";
@@ -18,9 +18,8 @@ class StudyEnrollmentController with ChangeNotifier {
   }
 
   Future<dynamic> setBookInfoList(String? title) async {
-    print("Searching...");
-    searchTextList = await setStudyRepository.getBookInfos(title);
-    isLoading = false;
+    searchTextList = await studyEnrollmentRepository.getBookInfos(title);
+    isLoading=false;
     notifyListeners();
   }
 
