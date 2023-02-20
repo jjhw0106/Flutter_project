@@ -1,30 +1,32 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'package:dio/dio.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+void main() async {
+  searchBooks();
+}
 
-import 'package:dev_test/main.dart';
+Future<void> searchBooks() async {
+  Dio dio = Dio();
+  const String KAKAO_KEY = 'caaf835809f37a3a4ba57138eb4e9b99';
+  List<dynamic> searchTextList; 
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  dio.interceptors.add(
+    InterceptorsWrapper(
+      onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+        options.headers['Authorization'] = 'KakaoAK $KAKAO_KEY';
+        return handler.next(options);
+      },
+      // onResponse: (e, handler) {},
+      // onError: (e, handler) {},
+    ),
+  );
+  try {
+    Response<dynamic> response = await dio.get(
+        'https://dapi.kakao.com/v3/search/book',
+        queryParameters: {"query": "미움받을"});
+    Map<String, dynamic> data = response.data;
+    searchTextList = data["documents"];
+    print(searchTextList[0]);
+  } catch (e) {
+    print("에러 $e");
+  }
 }
