@@ -11,15 +11,22 @@ class StudyEnrollmentController with ChangeNotifier {
   String title = "";
 
   Future<void> onInit(context) async {
-    isLoading=true;
+    isLoading = true;
     print("controller setting...");
     searchTextList = <dynamic>[];
-    isLoading =false; 
+    isLoading = false;
   }
-  
+
   Future<dynamic> setBookInfoList(String? title) async {
     searchTextList = await studyEnrollmentRepository.getBookInfos(title);
     isLoading=false;
     notifyListeners();
+  }
+
+  String resultYn() {
+    if(searchTextList.isEmpty) {
+      return "검색 결과가 없습니다.";
+    } 
+    return "";
   }
 }

@@ -19,7 +19,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
   late StudyEnrollmentController studyController;
   late dynamic bookList;
   // 최초 검색 전 표시 문구
-  String noSearchMessage = "학습할 교재명을 검색해주세요!";
+  String screenMessage = "학습할 교재명을 검색해주세요!";
 
   @override
   void initState() {
@@ -43,16 +43,19 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
           title: const Text("문제집 등록", style: TextStyle(color: Colors.black,fontSize: 21.7)),
         ),
       
-      body: !studyController.isLoading
-          ? GestureDetector(
-            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-            child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: TextField(
+      body: !studyController.isLoading ? 
+      GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
                       controller: _textController,
-                      onSubmitted: (value) => _searchBooks(),
+                      onSubmitted: (value) {
+                        _searchBooks();
+                        _textController.clear();
+                      },
                       decoration: InputDecoration(
                         hintText: "찾으실 교재명을 적어주세요",
                         isDense: true,
@@ -60,7 +63,10 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                         suffix: Padding(
                           padding: const EdgeInsets.only(right: 20 ),
                           child: ElevatedButton(
-                            onPressed: () => _searchBooks(),
+                            onPressed: () {
+                              _searchBooks();
+                              _textController.clear();
+                              },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               elevation: 0,
@@ -72,8 +78,8 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                     ),
                   ),
                   Expanded(
-                    child: studyController.searchTextList.length == 0 ? 
-                    Center(child: Text(noSearchMessage)): 
+                    child: studyController.searchTextList.isEmpty ? 
+                  Center(child: Text(screenMessage)) : 
                     ListView.builder(
                       itemCount: studyController.searchTextList.length,
                       itemBuilder: (context, index) {
@@ -104,10 +110,8 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
   }
   // 검색결과 x 문구세팅 및 책검색 API 검색결과 세팅
   void _searchBooks(){
-    noSearchMessage = "검색 결과가 없습니다.";
     studyController.setBookInfoList(_textController.text);
-    _textController.text = '';
-    setState(() {});
+    screenMessage = studyController.resultYn();
   }
 }
 
