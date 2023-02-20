@@ -15,7 +15,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
   late StudyEnrollmentController studyController;
   late dynamic bookList;
   // 최초 검색 전 표시 문구
-  String noSearchMessage = "학습할 교재명을 검색해주세요!";
+  String screenMessage = "학습할 교재명을 검색해주세요!";
 
   @override
   void initState() {
@@ -49,11 +49,9 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                   child: TextField(
                     controller: _textController,
                     onSubmitted: (value) {
-                      noSearchMessage = "검색 결과가 없습니다.";
-                      studyController.setBookInfoList(_textController.text);
-                      _textController.text = '';
-                      setState(() {});
-                      },
+                      _searchBooks();
+                      _textController.clear();
+                    },
                     decoration: InputDecoration(
                       hintText: "찾으실 교재명을 적어주세요",
                       isDense: true,
@@ -62,23 +60,23 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                         padding: const EdgeInsets.only(right: 20 ),
                         child: ElevatedButton(
                           onPressed: () {
-                            noSearchMessage = "검색 결과가 없습니다.";
-                            studyController.setBookInfoList(_textController.text);
-                            _textController.text = '';
-                            setState(() {});
-                            }, 
-                          child: const Text("검색",style: TextStyle(color: Colors.black),),
+                            _searchBooks();
+                            _textController.clear();
+                            },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             elevation: 0,
-                          ),
+                          ), 
+                          child: const Text("검색",style: TextStyle(color: Colors.black),),
                         ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: studyController.searchTextList.length == 0? Center(child: Text(noSearchMessage)): ListView.builder(
+                  child: studyController.searchTextList.isEmpty ? 
+                  Center(child: Text(screenMessage)) : 
+                  ListView.builder(
                     itemCount: studyController.searchTextList.length,
                     itemBuilder: (context, index) {
                       return bookItemContainer(studyController.searchTextList[index]['title']);
@@ -96,13 +94,11 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
             ),
     );
   }
-  // // 검색결과 x 문구세팅 및 책검색 API 검색결과 세팅
-  // void _searchBooks(){
-  //   noSearchMessage = "검색 결과가 없습니다.";
-  //   studyController.setBookInfoList(_textController.text);
-  //   _textController.text = '';
-  //   setState(() {});
-  // }
+  // 검색결과 x 문구세팅 및 책검색 API 검색결과 세팅
+  void _searchBooks(){
+    studyController.setBookInfoList(_textController.text);
+    screenMessage = studyController.resultYn();
+  }
 }
 
 // 검색된 도서 표시 레이아웃
