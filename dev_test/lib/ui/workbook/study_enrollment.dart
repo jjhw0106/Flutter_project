@@ -1,7 +1,7 @@
+import 'package:dev_test/controller/workbook/study_enrollment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/workbook/study_enrollment_controller.dart';
 
 class StudyEnrollment extends StatefulWidget {
   const StudyEnrollment({super.key});
@@ -66,12 +66,12 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                             studyController.setBookInfoList(_textController.text);
                             _textController.text = '';
                             setState(() {});
-                            }, 
-                          child: const Text("검색",style: TextStyle(color: Colors.black),),
+                            },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
                             elevation: 0,
-                          ),
+                          ), 
+                          child: const Text("검색",style: TextStyle(color: Colors.black),),
                         ),
                       ),
                     ),
