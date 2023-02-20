@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 
 class StudyEnrollmentController with ChangeNotifier {
   late dynamic searchTextList;
-  final StudyEnrollmentRepository setStudyRepository;
+  final StudyEnrollmentRepository studyEnrollmentRepository;
 
-  StudyEnrollmentController(this.setStudyRepository);
+  StudyEnrollmentController(this.studyEnrollmentRepository);
 
   bool isLoading = false;
   String title = "";
@@ -18,7 +18,7 @@ class StudyEnrollmentController with ChangeNotifier {
   }
   
   Future<dynamic> setBookInfoList(String? title) async {
-    searchTextList = await setStudyRepository.getBookInfos(title);
+    searchTextList = await studyEnrollmentRepository.getBookInfos(title);
     isLoading=false;
     notifyListeners();
   }
