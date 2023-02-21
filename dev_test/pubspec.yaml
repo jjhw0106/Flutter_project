@@ -67,7 +67,22 @@ flutter:
   assets:
    - assets/images/
    - .env
-
+  fonts:
+    - family: Noto_Sans_KR-Bold
+      fonts:
+        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Bold.otf
+    - family: Noto_Sans_KR-Light
+      fonts:
+        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Light.otf
+    - family: Noto_Sans_KR-Medium
+      fonts:
+        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Medium.otf
+    - family: Noto_Sans_KR-Regulars
+      fonts:
+        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Regular.otf
+    - family: Noto_Sans_KR-Thin
+      fonts:
+        - asset: assets/fonts/Noto_Sans_KR/NotoSansKR-Thin.otf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -91,5 +106,6 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
