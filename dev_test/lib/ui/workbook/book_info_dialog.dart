@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+// 컴파일되는 순간 미리 만들어 놓는것인지?
 Future bookInfoDialog(BuildContext context, dynamic selectedBook) async {
-  const double fontSize = 13.7;
+  final double contentFontSize = 12.7;
+  final double titleFontSize = 14.0;
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -9,27 +11,29 @@ Future bookInfoDialog(BuildContext context, dynamic selectedBook) async {
         borderRadius: BorderRadius.circular(20.0),
       ),
       content: ConstrainedBox(
-        constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
+        constraints: const BoxConstraints(maxHeight: 403.3, maxWidth: 269.3),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           // 썸네일
           _thumbnailBox(selectedBook),
           const SizedBox(height: 20),
-          // 제목
+          // 제목, 한 곳만 코드가 들어가서 위젯으로 안 뺌
           SizedBox(
+            height: 50,
+            width: 209,
             child: Align(
               alignment: Alignment.center,
               child: Text(selectedBook['title'],
-                  style: const TextStyle(
-                      fontSize: fontSize + 2,
+                  style: TextStyle(
+                      fontSize: titleFontSize,
                       fontFamily: 'NotoSansKR-Medium',
                       fontWeight: FontWeight.bold)),
             ),
           ),
           const SizedBox(height: 15),
           // 출판사
-          _dialogContentsRow(fontSize, selectedBook, "publisher", "출판사명"),
+          _dialogContentsRow(contentFontSize, selectedBook, "publisher", "출판사명"),
           // 출판일
-          _dialogContentsRow(fontSize, selectedBook, "datetime", "출판일"),
+          _dialogContentsRow(contentFontSize, selectedBook, "datetime", "출판일"),
         ],
         ),
       ),
@@ -54,7 +58,6 @@ Widget _dialogContentsRow(double fontSize, selectedBook, searchingKey, searching
   return SizedBox(
     child: Align(
       alignment: Alignment.centerLeft,
-
       child: Container(
         height:40,
         decoration: const BoxDecoration(border: Border(top: BorderSide(width: 1,color: Color(0xffeeeeee)))),
@@ -69,7 +72,8 @@ Widget _dialogContentsRow(double fontSize, selectedBook, searchingKey, searching
                     color: const Color(0xff66000000),
                     fontSize: fontSize,
                     fontFamily: 'NotoSansKR-Medium',
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold
+                    ),
               ),
             ),
             Text(
@@ -102,7 +106,7 @@ Widget _thumbnailBox(selectedBook) {
               )
             ],
           ),
-          height: 200,
+          height: 137,
           child: Image.network(
             selectedBook['thumbnail'],
             fit: BoxFit.cover,
