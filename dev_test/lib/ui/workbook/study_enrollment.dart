@@ -1,5 +1,5 @@
 import 'package:dev_test/controller/workbook/study_enrollment_controller.dart';
-import 'package:dev_test/data/model/book_info.dart';
+import 'package:dev_test/data/model/kakao_workbook.dart';
 import 'package:dev_test/ui/workbook/book_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,6 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
   final int _PREV = 1;
   final int _NEXT = 2;
   final _textController = TextEditingController();
-  List<BookInfo> bookInfo = [];
   late StudyEnrollmentController studyController;
   late dynamic bookList;
   // 최초 검색 전 표시 문구
@@ -107,13 +106,13 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                     ),
                   ),
                   Expanded(
-                    child: studyController.searchTextList.isEmpty
+                    child: studyController.bookList.isEmpty
                         ? Center(child: Text(screenMessage))
                         : ListView.builder(
-                            itemCount: studyController.searchTextList.length,
+                            itemCount: studyController.bookList.length,
                             itemBuilder: (context, index) {
                               return bookItemContainer(context,
-                                  studyController.searchTextList[index]);
+                                  studyController.bookList[index]);
                             },
                           ),
                   ),
@@ -160,6 +159,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
   }
 }
 
+// 하단 노출 메시지
 Widget footerText(String message) {
   return Text(
     message,
@@ -171,13 +171,9 @@ Widget footerText(String message) {
   );
 }
 
-Widget moveStep(BuildContext context, int move, String message,
-    {String? next}) {
-  // ButtonStyle style = ElevatedButton.styleFrom(
-  //   textStyle: const TextStyle(fontSize: 17.7, color: Colors.black),
-  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80)),
-  //   minimumSize: const Size(143.3, 54),
-  // );
+// 단계 이동 버튼
+// ButtonStyle, MaterialStateProperty를 활용하여 클릭시 버튼 색 반전
+Widget moveStep(BuildContext context, int move, String message, {String? next}) {
   ButtonStyle style = ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xfff6f7fa)),
     foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -218,7 +214,7 @@ Widget moveStep(BuildContext context, int move, String message,
 }
 
 // 검색된 도서 표시 레이아웃
-Widget bookItemContainer(BuildContext context, dynamic selectedBook) {
+Widget bookItemContainer(BuildContext context, KakaoWorkbook selectedBook) {
   return Container(
     decoration: const BoxDecoration(
         border: Border(top: BorderSide(width: 1, color: Color(0xffeeeeee)))),
@@ -232,7 +228,7 @@ Widget bookItemContainer(BuildContext context, dynamic selectedBook) {
           Flexible(
             flex: 8,
             child: Text(
-              selectedBook['title'],
+              selectedBook.title,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                   fontWeight: FontWeight.bold,

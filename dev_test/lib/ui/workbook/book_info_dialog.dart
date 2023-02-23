@@ -1,9 +1,10 @@
+import 'package:dev_test/data/model/kakao_workbook.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 // 컴파일되는 순간 미리 만들어 놓는것인지?
-Future bookInfoDialog(BuildContext context, dynamic selectedBook) async {
-  final double contentFontSize = 12.7;
-  final double titleFontSize = 14.0;
+Future bookInfoDialog(BuildContext context, KakaoWorkbook selectedBook) async {
+  const double contentFontSize = 12.7;
+  const double titleFontSize = 14.0;
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -22,8 +23,8 @@ Future bookInfoDialog(BuildContext context, dynamic selectedBook) async {
             width: 209,
             child: Align(
               alignment: Alignment.center,
-              child: Text(selectedBook['title'],
-                  style: TextStyle(
+              child: Text(selectedBook.title,
+                  style: const TextStyle(
                       fontSize: titleFontSize,
                       fontFamily: 'NotoSansKR-Medium',
                       fontWeight: FontWeight.bold)),
@@ -31,9 +32,9 @@ Future bookInfoDialog(BuildContext context, dynamic selectedBook) async {
           ),
           const SizedBox(height: 15),
           // 출판사
-          _dialogContentsRow(contentFontSize, selectedBook, "publisher", "출판사명"),
+          _dialogContentsRow(contentFontSize, selectedBook, selectedBook.publisher, "출판사명"),
           // 출판일
-          _dialogContentsRow(contentFontSize, selectedBook, "datetime", "출판일"),
+          _dialogContentsRow(contentFontSize, selectedBook, selectedBook.datetime, "출판일"),
         ],
         ),
       ),
@@ -54,7 +55,11 @@ Future bookInfoDialog(BuildContext context, dynamic selectedBook) async {
   );
 }
 
-Widget _dialogContentsRow(double fontSize, selectedBook, searchingKey, searchingKeyName) {
+// 도서정보 Row
+// selectedBook : 선택된 도서 전체 정보
+// searchingKey : API 쿼리 key
+// searchingKeyName : key에 해당하는 한국명
+Widget _dialogContentsRow(double fontSize, KakaoWorkbook selectedBook, String searchingValue, String searchingKeyName) {
   return SizedBox(
     child: Align(
       alignment: Alignment.centerLeft,
@@ -77,7 +82,7 @@ Widget _dialogContentsRow(double fontSize, selectedBook, searchingKey, searching
               ),
             ),
             Text(
-              selectedBook[searchingKey],
+              searchingValue,
               style: TextStyle(
                 fontSize: fontSize,
                 fontFamily: 'NotoSansKR-Medium',
@@ -91,7 +96,10 @@ Widget _dialogContentsRow(double fontSize, selectedBook, searchingKey, searching
   );
 }
 
-Widget _thumbnailBox(selectedBook) {
+// 썸네일 network로 받아오기
+// shadow 넣기
+// 이미지 크기 컨테이너에 맞추기
+Widget _thumbnailBox(KakaoWorkbook selectedBook) {
   return SizedBox(
     child: Center(
       child: Padding(
@@ -108,7 +116,7 @@ Widget _thumbnailBox(selectedBook) {
           ),
           height: 137,
           child: Image.network(
-            selectedBook['thumbnail'],
+            selectedBook.thumbnail,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) => const Center(child: Text('no Image')),
           ),
@@ -118,6 +126,7 @@ Widget _thumbnailBox(selectedBook) {
   );
 }
 
+// ButtonStyle - MaterialStateProperty로 이벤트 시 ui rebuild
 Widget _buttonStyleButton(BuildContext context, String message) {
   return ElevatedButton(
     onPressed: () => Navigator.pop(context),
