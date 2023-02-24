@@ -4,8 +4,6 @@ import 'package:dev_test/ui/workbook/book_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const double a = 0;
-
 class StudyEnrollment extends StatefulWidget {
   const StudyEnrollment({super.key});
   // const double a = 0; 클래스 변수 필드에서는 const사용 불가, static 필요

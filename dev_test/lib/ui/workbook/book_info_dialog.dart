@@ -96,7 +96,7 @@ Widget _dialogContentsRow(double fontSize, KakaoWorkbook selectedBook, String se
   );
 }
 
-// 썸네일 network로 받아오기
+// 썸네일 Image.network로 받아오기
 // shadow 넣기
 // 이미지 크기 컨테이너에 맞추기
 Widget _thumbnailBox(KakaoWorkbook selectedBook) {
@@ -126,6 +126,7 @@ Widget _thumbnailBox(KakaoWorkbook selectedBook) {
   );
 }
 
+// sp -> 폰트 사이즈, build때 화면에서 가로폭 세로높이 구하는 메소드 존재(상대적으로) 기존 코드 참고
 // ButtonStyle - MaterialStateProperty로 이벤트 시 ui rebuild
 Widget _buttonStyleButton(BuildContext context, String message) {
   return ElevatedButton(

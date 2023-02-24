@@ -26,7 +26,7 @@ class StudyEnrollmentProvider {
       print("API Connected");
       return data["documents"];
     } catch (e) {
-      print("API Error: $e");
+      print("API Error: $e"); // ResponseHelper에서 에러 시 처리
       throw Exception();
     }
   }
