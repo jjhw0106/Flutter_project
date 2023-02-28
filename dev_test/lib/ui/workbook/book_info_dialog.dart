@@ -18,18 +18,7 @@ Future bookInfoDialog(BuildContext context, KakaoWorkbook selectedBook) async {
           _thumbnailBox(selectedBook),
           const SizedBox(height: 20),
           // 제목, 한 곳만 코드가 들어가서 위젯으로 안 뺌
-          SizedBox(
-            height: 50,
-            width: 209,
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(selectedBook.title,
-                  style: const TextStyle(
-                      fontSize: titleFontSize,
-                      fontFamily: 'NotoSansKR-Medium',
-                      fontWeight: FontWeight.bold)),
-            ),
-          ),
+          _titleBox(selectedBook, titleFontSize),
           const SizedBox(height: 15),
           // 출판사
           _dialogContentsRow(contentFontSize, selectedBook, selectedBook.publisher, "출판사명"),
@@ -53,6 +42,21 @@ Future bookInfoDialog(BuildContext context, KakaoWorkbook selectedBook) async {
       ],
     ),
   );
+}
+
+Widget _titleBox(KakaoWorkbook selectedBook, double titleFontSize) {
+  return SizedBox(
+          height: 50,
+          width: 209,
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(selectedBook.title,
+                style: TextStyle(
+                    fontSize: titleFontSize,
+                    fontFamily: 'NotoSansKR-Medium',
+                    fontWeight: FontWeight.bold)),
+          ),
+        );
 }
 
 // 도서정보 Row

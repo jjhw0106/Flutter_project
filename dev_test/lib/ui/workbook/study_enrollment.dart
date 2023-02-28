@@ -4,6 +4,8 @@ import 'package:dev_test/ui/workbook/book_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'common_layout/common_appbar.dart';
+
 class StudyEnrollment extends StatefulWidget {
   const StudyEnrollment({super.key});
   // const double a = 0; 클래스 변수 필드에서는 const사용 불가, static 필요
@@ -34,6 +36,9 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     studyController = context.watch<StudyEnrollmentController>();
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -42,22 +47,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
       child: Scaffold(
         // 키보드 입력시 화면 밀림 방지
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          elevation: 0,
-          backgroundColor: Colors.blue,
-          automaticallyImplyLeading: true,
-          centerTitle: true,
-          title: const Text("문제집 등록",
-              style: TextStyle(
-                color: Colors.black, 
-                fontSize: 21.7,
-                fontWeight: FontWeight.bold
-                ),
-              ),
-        ),
+        appBar: appBar(message: "문제집 등록", selected: "국어"),
         body: !studyController.isLoading
             ? Column(
                 children: [
@@ -96,7 +86,6 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                             child: const Text(
                               "검색",
                               style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                            
                             ),
                           ),
                         ),
@@ -109,13 +98,12 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                         : ListView.builder(
                             itemCount: studyController.bookList.length,
                             itemBuilder: (context, index) {
-                              return bookItemContainer(context,
-                                  studyController.bookList[index]);
+                              return bookItemContainer(context, studyController.bookList[index], height, width);
                             },
                           ),
                   ),
                   SizedBox(
-                    height: 125,
+                    height: height*0.2,
                     width: double.infinity,
                     // color: Color(0xff66000000),
                     child: Column(
@@ -129,7 +117,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 25, 0, 25),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 25),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -149,6 +137,25 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
       ),
     );
   }
+
+  // AppBar appBar() {
+  //   return AppBar(
+  //       iconTheme: const IconThemeData(
+  //         color: Colors.black, //change your color here
+  //       ),
+  //       elevation: 0,
+  //       backgroundColor: Colors.blue,
+  //       automaticallyImplyLeading: true,
+  //       centerTitle: true,
+  //       title: const Text("문제집 등록",
+  //           style: TextStyle(
+  //             color: Colors.black, 
+  //             fontSize: 21.7,
+  //             fontWeight: FontWeight.bold
+  //             ),
+  //           ),
+  //     );
+  // }
 
   // 검색결과 x 문구세팅 및 책검색 API 검색결과 세팅
   void _searchBooks() {
@@ -212,12 +219,12 @@ Widget moveStep(BuildContext context, int move, String message, {String? next}) 
 }
 
 // 검색된 도서 표시 레이아웃
-Widget bookItemContainer(BuildContext context, KakaoWorkbook selectedBook) {
+Widget bookItemContainer(BuildContext context, KakaoWorkbook selectedBook, double height, double width) {
   return Container(
     decoration: const BoxDecoration(
         border: Border(top: BorderSide(width: 1, color: Color(0xffeeeeee)))),
-    height: 60,
-    width: 100,
+    height: height*0.08,
+    width: width*0.88,
     child: Padding(
       padding: const EdgeInsets.fromLTRB(27.3, 0, 17.3, 0),
       child: Row(
