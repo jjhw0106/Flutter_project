@@ -1,8 +1,6 @@
 import 'package:dev_test/ui/point/random_box.dart';
-import 'package:dev_test/ui/workbook/study_enrollment.dart';
 import 'package:dev_test/ui/workbook/study_type_selection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -20,12 +18,6 @@ class Home extends StatelessWidget {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const RandomBox()));
               }, 
               child: const Text("RandomBox")
-            ),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const StudyEnrollment()));
-              }, 
-              child: const Text("SetStudytype")
             ),
             ElevatedButton(
               onPressed: (){

@@ -25,7 +25,7 @@ Future<void> searchBooks() async {
         queryParameters: {"query": "미움받을"});
     Map<String, dynamic> data = response.data;
     searchTextList = data["documents"];
-    print(searchTextList[0]);
+    print((searchTextList[3]['datetime'] as String).substring(0,10));
   } catch (e) {
     print("에러 $e");
   }
