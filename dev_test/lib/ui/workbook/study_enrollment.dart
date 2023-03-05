@@ -1,10 +1,11 @@
 import 'package:dev_test/controller/workbook/study_enrollment_controller.dart';
 import 'package:dev_test/data/model/kakao_workbook.dart';
+import 'package:dev_test/helpers/enums.dart';
 import 'package:dev_test/ui/workbook/book_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'common_layout/common_appbar.dart';
+import 'common_layout/common_widgets.dart';
 
 class StudyEnrollment extends StatefulWidget {
   const StudyEnrollment({super.key});
@@ -18,8 +19,6 @@ class StudyEnrollment extends StatefulWidget {
 const double fontSize = 16;
 
 class _StudyEnrollmentState extends State<StudyEnrollment> {
-  final int _PREV = 1;
-  final int _NEXT = 2;
   final _textController = TextEditingController();
   late StudyEnrollmentController studyController;
   late dynamic bookList;
@@ -76,6 +75,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                           padding: const EdgeInsets.only(right: 20),
                           child: ElevatedButton(
                             onPressed: () {
+                              print("context1 $context");
                               _searchBooks();
                               _textController.clear();
                             },
@@ -121,8 +121,8 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          moveStep(context, _PREV, "뒤로가기"),
-                          moveStep(context, _NEXT, "다음단계")
+                          moveStep(context, UiHelpers.prev, "뒤로가기"),
+                          moveStep(context, UiHelpers.next, "다음단계")
                         ]),
                   )
                 ],
@@ -173,48 +173,6 @@ Widget footerText(String message) {
         fontSize: fontSize,
         fontFamily: 'NotoSansKR-Medium',
         fontWeight: FontWeight.bold),
-  );
-}
-
-// 단계 이동 버튼
-// ButtonStyle, MaterialStateProperty를 활용하여 클릭시 버튼 색 반전
-Widget moveStep(BuildContext context, int move, String message, {String? next}) {
-  ButtonStyle style = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xfff6f7fa)),
-    foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-      if (states.contains(MaterialState.pressed)) {
-        return Colors.white;
-      }
-      return const Color(0xff5664cd);
-    }),
-    side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 1, color: Color(0xff5664cd))),
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(80)
-        ),
-      ),
-    textStyle: MaterialStateProperty.all<TextStyle>(
-      const TextStyle(
-        color: Colors.white, 
-        fontSize: fontSize, 
-        fontWeight: FontWeight.bold),
-        ),
-    elevation: MaterialStateProperty.all(0),
-    minimumSize: MaterialStateProperty.all(const Size(143.3, 54)),
-    overlayColor: MaterialStateProperty.resolveWith((states) {
-      return states.contains(MaterialState.pressed)
-          ? const Color(0xff5664cd)
-          : null;
-    }),
-  );
-  return ElevatedButton(
-    onPressed: () {
-      if (move == 1) {
-        Navigator.pop(context);
-      } else if (move == 2) {}
-    },
-    style: style,
-    child: Text(message),
   );
 }
 
