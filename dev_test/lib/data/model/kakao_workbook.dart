@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class KakaoWorkbook {
   final String title;
   final String contents;
@@ -37,7 +39,7 @@ class KakaoWorkbook {
       contents = mapItem['contents'],
       url = mapItem['url'],
       isbn = mapItem['isbn'],
-      datetime = mapItem['datetime'],
+      datetime = (mapItem['datetime'] as String).substring(0,10),
       authors = (mapItem['authors'] as List).map((e) => (e as String)).toList(),
       publisher = mapItem['publisher'],
       translators = (mapItem['translators'] as List).map((e) => (e as String)).toList(),
