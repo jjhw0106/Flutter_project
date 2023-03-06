@@ -49,6 +49,7 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
       ),
     );
   }
+  
   Widget subTitle(double height){
     return SizedBox(
       height: height * 0.1,
