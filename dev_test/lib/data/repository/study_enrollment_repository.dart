@@ -1,10 +1,10 @@
 import 'package:dev_test/data/provider/study_enrollment_provider.dart';
 
 class StudyEnrollmentRepository {
-  final StudyEnrollmentProvider _setStudyProvider;
-  StudyEnrollmentRepository(this._setStudyProvider);
+  final StudyEnrollmentProvider _studyEnrollmentProvider;
+  StudyEnrollmentRepository(this._studyEnrollmentProvider);
 
-  Future<dynamic> getBookInfos(String? title) async {
-    return _setStudyProvider.getBooksFromKakao(title);
+  Future<List<dynamic>> getBookInfos(String? title) async {
+    return _studyEnrollmentProvider.getBooksFromKakao(title);
   }
 }
