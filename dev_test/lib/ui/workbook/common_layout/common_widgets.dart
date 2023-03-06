@@ -23,6 +23,7 @@ AppBar appBar({String? selected, required String message}) {
 
 // 단계 이동 버튼
 // ButtonStyle, MaterialStateProperty를 활용하여 클릭시 버튼 색 반전
+// next클릭시 이동할 페이지 get
 Widget moveStep(BuildContext context, Enum move, String message, {dynamic nextPage}) {
   const double fontSize = 16;
   ButtonStyle style = moveStepButtonStyle(fontSize);
