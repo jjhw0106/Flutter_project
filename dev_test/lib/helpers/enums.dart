@@ -6,7 +6,7 @@ enum UiHelpers {
   next,
 }
 
-enum SelectedOne {
+enum SelectedType {
   bookType,
   videoType,
   nothing

@@ -13,6 +13,7 @@ class KakaoWorkbook {
   final int? salePrice;
   final String thumbnail;
   final String status;
+  bool isClicked=false;
 
   KakaoWorkbook(
     this.title,
@@ -27,6 +28,7 @@ class KakaoWorkbook {
     this.salePrice,
     this.thumbnail,
     this.status,
+    this.isClicked
   );
 
   // named constructor
