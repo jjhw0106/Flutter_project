@@ -12,14 +12,8 @@ class StudyTypeSelection extends StatefulWidget {
   State<StudyTypeSelection> createState() => _StudyTypeSelectionState();
 }
 
-enum SelectedType {
-  studyBook,
-  studyVideo
-}
-
 class _StudyTypeSelectionState extends State<StudyTypeSelection> {
   late StudyTypeSelectionController selectionController;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +64,13 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
       children: <Widget> [
         InkWell(
           onTap: () {
-            selectionController.selectType(SelectedOne.bookType);
+            selectionController.selectType(SelectedType.bookType);
           },
           child: Container(
             key: const Key('study_book'),
             decoration: BoxDecoration(
-              color: selectionController.selectedType == SelectedOne.bookType ?
-              const Color(0xff5664cd) :
+              color: selectionController.selectedType == SelectedType.bookType ?
+              const Color(0xff197ca8f8) :
               Colors.transparent,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
@@ -109,14 +103,14 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
         ),
         InkWell(
           onTap: () {
-            selectionController.selectType(SelectedOne.videoType);
+            selectionController.selectType(SelectedType.videoType);
           },
           child: Container(
             key: const Key('study_video'),
             decoration: BoxDecoration(
               // ignore: use_full_hex_values_for_flutter_colors
-              color: selectionController.selectedType == SelectedOne.videoType ?
-                const Color(0xff5664cd) :
+              color: selectionController.selectedType == SelectedType.videoType ?
+                const Color(0xff197ca8f8) :
                 Colors.transparent,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
@@ -130,7 +124,7 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
               children: [
                 Image.asset(
                   'assets/images/iconvideo.png',
-                  width: width * 0.2,
+                  width: width * 0.3,
                   height: width * 0.2,
                   fit: BoxFit.fill,
                 ),
