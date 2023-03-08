@@ -1,5 +1,6 @@
 import 'package:dev_test/data/model/kakao_workbook.dart';
 import 'package:dev_test/data/repository/study_enrollment_repository.dart';
+import 'package:dev_test/ui/workbook/workbook_detail.dart';
 import 'package:flutter/cupertino.dart';
 
 class StudyEnrollmentController with ChangeNotifier {
@@ -9,9 +10,8 @@ class StudyEnrollmentController with ChangeNotifier {
   StudyEnrollmentController(this.studyEnrollmentRepository);
 
   bool isLoading = false;
-  // bool isClicked = false;
   String title = "";
-  dynamic selectedItem;
+  dynamic nextPage;
 
   Future<void> onInit(context) async {
     isLoading = true;
@@ -27,29 +27,46 @@ class StudyEnrollmentController with ChangeNotifier {
     for (var element in apiList) {
       bookList.add(KakaoWorkbook.fromMap(element));
     }
-    isLoading=false;
+    isLoading = false;
     notifyListeners();
   }
 
   String resultYn() {
-    if(bookList.isEmpty) {
+    if (bookList.isEmpty) {
       return "검색 결과가 없습니다.";
-    } 
+    }
     return "";
   }
 
-  void rowSelection(dynamic selectedItem){
+  void rowSelection(dynamic selectedItem) {
     // for문 말고 다른 방법은?
     for (var element in bookList) {
-      if(element != selectedItem && element.isClicked == true){
+      if (element != selectedItem && element.isClicked == true) {
         element.isClicked = false;
       }
     }
     selectedItem.isClicked = !selectedItem.isClicked;
     !selectedItem.isClicked ? selectedItem = null : selectedItem = selectedItem;
-    // print('클릭여부 $isClicked');
-    print('선택 아이템: selectedItem');
+    print('선택 아이템: $selectedItem');
     notifyListeners();
   }
 
+  // rowSelection안에서 실행하려다 분리
+  // 인강과 교재 선택에 따라 받아오는 nextpage를 하나의 메소드로 구분하기 위한 메소드
+  void getNextPage(dynamic selectedItem) {
+    nextPage = null;
+    // 클릭된 경우만 nextPage 지정해야하기 때문
+    if (selectedItem.isClicked == true) {
+      // if (selectedItem.runtimeType == KakaoWorkbook) {
+      //   nextPage = const WorkbookDetail();
+      //   print("nextPage2: $nextPage");
+      // }
+      switch (selectedItem.runtimeType) {
+        case KakaoWorkbook:
+          nextPage = const WorkbookDetail();
+          break;
+        default:
+      }
+    }
+  }
 }
