@@ -20,7 +20,7 @@ const double fontSize = 16;
 
 class _StudyEnrollmentState extends State<StudyEnrollment> {
   final _textController = TextEditingController();
-  late StudyEnrollmentController studyController;
+  late StudyEnrollmentController studyEnrollmentController;
   late dynamic bookList;
   // 최초 검색 전 표시 문구
   String screenMessage = "학습할 교재명을 검색해주세요!";
@@ -28,9 +28,9 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
   @override
   void initState() {
     super.initState();
-    studyController =
+    studyEnrollmentController =
         Provider.of<StudyEnrollmentController>(context, listen: false);
-    studyController.onInit(context);
+    studyEnrollmentController.onInit(context);
   }
 
   @override
@@ -38,7 +38,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
     Size size = MediaQuery.of(context).size;
     double width = size.width;
     double height = size.height;
-    studyController = context.watch<StudyEnrollmentController>();
+    studyEnrollmentController = context.watch<StudyEnrollmentController>();
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       onVerticalDragDown: (details) =>
@@ -47,7 +47,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
         // 키보드 입력시 화면 밀림 방지
         resizeToAvoidBottomInset: false,
         appBar: appBar(message: "문제집 등록", selected: "국어"),
-        body: !studyController.isLoading
+        body: !studyEnrollmentController.isLoading
             ? Column(
                 children: [
                   Padding(
@@ -92,12 +92,12 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                     ),
                   ),
                   Expanded(
-                    child: studyController.bookList.isEmpty
+                    child: studyEnrollmentController.bookList.isEmpty
                         ? Center(child: Text(screenMessage))
                         : ListView.builder(
-                            itemCount: studyController.bookList.length,
+                            itemCount: studyEnrollmentController.bookList.length,
                             itemBuilder: (context, index) {
-                              return bookItemContainer(context, studyController.bookList[index], height, width);
+                              return bookItemContainer(context, studyEnrollmentController.bookList[index], height, width);
                             },
                           ),
                   ),
@@ -121,7 +121,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           moveStep(context, UiHelpers.prev, "뒤로가기"),
-                          moveStep(context, UiHelpers.next, "다음단계")
+                          moveStep(context, UiHelpers.next, "다음단계", nextPage: studyEnrollmentController.nextPage),
                         ]),
                   )
                 ],
@@ -139,8 +139,8 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
 
   // 검색결과 x 문구세팅 및 책검색 API 검색결과 세팅
   void _searchBooks() {
-    studyController.setBookInfoList(_textController.text);
-    screenMessage = studyController.resultYn();
+    studyEnrollmentController.setBookInfoList(_textController.text);
+    screenMessage = studyEnrollmentController.resultYn();
   }
   // 하단 노출 메시지
   Widget footerText(String message) {
@@ -169,7 +169,8 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
         behavior: HitTestBehavior.translucent,
         onTap: () {
           print("도서 선택 ${selectedBook.title}");
-          studyController.rowSelection(selectedBook);
+          studyEnrollmentController.rowSelection(selectedBook);
+          studyEnrollmentController.getNextPage(selectedBook);
         },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(27.3, 0, 17.3, 0),

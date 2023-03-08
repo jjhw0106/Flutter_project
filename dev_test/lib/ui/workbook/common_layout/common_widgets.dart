@@ -34,7 +34,7 @@ Widget moveStep(BuildContext context, Enum move, String message, {dynamic nextPa
       } else if (move == UiHelpers.next) {
           if(nextPage == null) {
             // 다이알로그 위젯 분리할것
-            showDialog(context: context, builder: (context) => const Text("학습 타입을 선택해주세요"),);
+            showDialog(context: context, builder: (context) => const Text("최소 하나 선택해주세요"),);
             return ;
           }
         Navigator.push(context, MaterialPageRoute(builder: (context) => nextPage));
