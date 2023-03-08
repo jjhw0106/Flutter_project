@@ -75,7 +75,6 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
                           padding: const EdgeInsets.only(right: 20),
                           child: ElevatedButton(
                             onPressed: () {
-                              print("context1 $context");
                               _searchBooks();
                               _textController.clear();
                             },
@@ -138,78 +137,70 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
     );
   }
 
-  // AppBar appBar() {
-  //   return AppBar(
-  //       iconTheme: const IconThemeData(
-  //         color: Colors.black, //change your color here
-  //       ),
-  //       elevation: 0,
-  //       backgroundColor: Colors.blue,
-  //       automaticallyImplyLeading: true,
-  //       centerTitle: true,
-  //       title: const Text("문제집 등록",
-  //           style: TextStyle(
-  //             color: Colors.black, 
-  //             fontSize: 21.7,
-  //             fontWeight: FontWeight.bold
-  //             ),
-  //           ),
-  //     );
-  // }
-
   // 검색결과 x 문구세팅 및 책검색 API 검색결과 세팅
   void _searchBooks() {
     studyController.setBookInfoList(_textController.text);
     screenMessage = studyController.resultYn();
   }
-}
+  // 하단 노출 메시지
+  Widget footerText(String message) {
+    return Text(
+      message,
+      style: const TextStyle(
+          color: Color(0xff66000000),
+          fontSize: fontSize,
+          fontFamily: 'NotoSansKR-Medium',
+          fontWeight: FontWeight.bold),
+    );
+  }
 
-// 하단 노출 메시지
-Widget footerText(String message) {
-  return Text(
-    message,
-    style: const TextStyle(
-        color: Color(0xff66000000),
-        fontSize: fontSize,
-        fontFamily: 'NotoSansKR-Medium',
-        fontWeight: FontWeight.bold),
-  );
-}
-
-// 검색된 도서 표시 레이아웃
-Widget bookItemContainer(BuildContext context, KakaoWorkbook selectedBook, double height, double width) {
-  return Container(
-    decoration: const BoxDecoration(
-        border: Border(top: BorderSide(width: 1, color: Color(0xffeeeeee)))),
-    height: height*0.08,
-    width: width*0.88,
-    child: Padding(
-      padding: const EdgeInsets.fromLTRB(27.3, 0, 17.3, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            flex: 8,
-            child: Text(
-              selectedBook.title,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  fontFamily: 'Noto_Sans_KR-Medium'),
-            ),
+  // 검색된 도서 표시 레이아웃
+  Widget bookItemContainer(BuildContext context, KakaoWorkbook selectedBook, double height, double width) {
+    return Container(
+      decoration: BoxDecoration(
+          border: const Border(top: BorderSide(width: 1, color: Color(0xffeeeeee))),
+          color: selectedBook.isClicked ? Colors.amber : Colors.transparent,
           ),
-          Flexible(
-            flex: 2,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_forward_ios_rounded),
-              onPressed: () {
-                bookInfoDialog(context, selectedBook);
-              },
-            ),
+      height: height*0.08,
+      width: width,
+      child: GestureDetector(
+        // GestureDetector의 child에 아무리 큰 Container 영역을 잡아도 실제 위젯만큼만 터치 영역이 설정된다
+        // 아래 코드는 GestureDetector의 child 전체 영역을 터치 범위로 인식할 수 있도록 해준다.
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          print("도서 선택 ${selectedBook.title}");
+          studyController.rowSelection(selectedBook);
+        },
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(27.3, 0, 17.3, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 4,
+                fit: FlexFit.tight,
+                child: Text(
+                  selectedBook.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'Noto_Sans_KR-Medium'),
+                ),
+              ),
+              Flexible(
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios_rounded),
+                  onPressed: () {
+                    bookInfoDialog(context, selectedBook);
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
+

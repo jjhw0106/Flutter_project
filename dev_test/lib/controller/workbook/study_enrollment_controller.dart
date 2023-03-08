@@ -9,7 +9,9 @@ class StudyEnrollmentController with ChangeNotifier {
   StudyEnrollmentController(this.studyEnrollmentRepository);
 
   bool isLoading = false;
+  // bool isClicked = false;
   String title = "";
+  dynamic selectedItem;
 
   Future<void> onInit(context) async {
     isLoading = true;
@@ -35,4 +37,19 @@ class StudyEnrollmentController with ChangeNotifier {
     } 
     return "";
   }
+
+  void rowSelection(dynamic selectedItem){
+    // for문 말고 다른 방법은?
+    for (var element in bookList) {
+      if(element != selectedItem && element.isClicked == true){
+        element.isClicked = false;
+      }
+    }
+    selectedItem.isClicked = !selectedItem.isClicked;
+    !selectedItem.isClicked ? selectedItem = null : selectedItem = selectedItem;
+    // print('클릭여부 $isClicked');
+    print('선택 아이템: selectedItem');
+    notifyListeners();
+  }
+
 }
