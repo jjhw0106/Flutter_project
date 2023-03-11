@@ -7,14 +7,13 @@ import 'package:provider/provider.dart';
 
 class StudyTypeSelection extends StatefulWidget {
   const StudyTypeSelection({super.key});
-
   @override
   State<StudyTypeSelection> createState() => _StudyTypeSelectionState();
 }
 
 class _StudyTypeSelectionState extends State<StudyTypeSelection> {
   late StudyTypeSelectionController selectionController;
-
+  bool isClicked = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -58,10 +57,16 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
       ),
     );
   }
-  Widget typeSelection(double width, double height ){
+  Widget typeSelection(double width, double height, /*bool isClicked*/){
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget> [
+        // selectionBox(width, height, SelectedType.bookType, isClicked),
+        // selectionBox(width, height, SelectedType.videoType, isClicked),
+        // 공통화 x
+        // 1. 공통 부분의 코드작성에 대한 복잡성
+        // 2. 디자인의 width, height 비율 다름
         InkWell(
           onTap: () {
             selectionController.selectType(SelectedType.bookType);
@@ -98,6 +103,7 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
                   ],
                 ),
               ],
+              
             ),
           ),
         ),
@@ -124,7 +130,7 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
               children: [
                 Image.asset(
                   'assets/images/iconvideo.png',
-                  width: width * 0.3,
+                  width: width * 0.2,
                   height: width * 0.2,
                   fit: BoxFit.fill,
                 ),
@@ -135,8 +141,57 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
               ],
             ),
           ),
-        ),
+        )
       ],
     ); 
   }
+
+  // InkWell selectionBox(double width, double height, SelectedType type, bool isClicked) {
+  //   return InkWell(
+  //       onTap: () {
+  //         isClicked = !isClicked;
+  //         selectionController.selectType(type);
+  //       },
+  //       child: Container(
+  //         decoration: BoxDecoration(
+  //           color: isClicked ?
+  //           const Color(0xff197ca8f8) :
+  //           Colors.transparent,
+  //           borderRadius: BorderRadius.circular(10),
+  //           border: Border.all(
+  //             color: const Color(0xff5664cd),
+  //           )
+  //         ),
+  //         width : width * 0.4,
+  //         height: height * 0.4,
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             type == SelectedType.bookType ? 
+  //             Image.asset(
+  //               'assets/images/iconbook.png',
+  //               width: width * 0.3,
+  //               height: width * 0.2,
+  //               fit: BoxFit.fitHeight,
+  //             ) :
+  //             Image.asset(
+  //               'assets/images/iconvideo.png',
+  //               width: width * 0.3,
+  //               height: width * 0.2,
+  //               fit: BoxFit.fitHeight,
+  //             ),
+  //             SizedBox(height: width * 0.05),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: const <Widget> [
+  //                 Text(
+  //                   '문제집 등록'
+  //                 ),
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     );
+  // }
 }
