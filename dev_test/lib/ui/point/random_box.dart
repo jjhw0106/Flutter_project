@@ -1,5 +1,5 @@
 import 'package:dev_test/controller/point/randombox_controller.dart';
-import 'package:dev_test/ui/workbook/study_enrollment.dart';
+import 'package:dev_test/ui/workbook/book_enrollment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +31,7 @@ class RandomBox extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () {
                         print("setStudy!!");
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const StudyEnrollment(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const BookEnrollment(),));
                       },
                       child: const ButtonBar(
                         children: [Text("버튼")],
