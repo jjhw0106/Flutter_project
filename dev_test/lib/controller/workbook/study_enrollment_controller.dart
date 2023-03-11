@@ -53,6 +53,7 @@ class StudyEnrollmentController with ChangeNotifier {
 
   // rowSelection안에서 실행하려다 분리
   // 인강과 교재 선택에 따라 받아오는 nextpage를 하나의 메소드로 구분하기 위한 메소드
+  // dynamic -> Widget?으로 변경 x => Widget이 아니고 객체타입이 옴
   void getNextPage(dynamic selectedItem) {
     nextPage = null;
     // 클릭된 경우만 nextPage 지정해야하기 때문
@@ -61,9 +62,10 @@ class StudyEnrollmentController with ChangeNotifier {
       //   nextPage = const WorkbookDetail();
       //   print("nextPage2: $nextPage");
       // }
+      print("nextpage: $nextPage");
       switch (selectedItem.runtimeType) {
         case KakaoWorkbook:
-          nextPage = const WorkbookDetail();
+          nextPage = WorkbookDetail(selectedItem);
           break;
         default:
       }

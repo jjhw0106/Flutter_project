@@ -1,7 +1,7 @@
 import 'package:dev_test/controller/workbook/study_type_selection_controller.dart';
 import 'package:dev_test/helpers/enums.dart';
 import 'package:dev_test/ui/workbook/common_layout/common_widgets.dart';
-import 'package:dev_test/ui/workbook/study_enrollment.dart';
+import 'package:dev_test/ui/workbook/book_enrollment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,14 +12,14 @@ class StudyTypeSelection extends StatefulWidget {
 }
 
 class _StudyTypeSelectionState extends State<StudyTypeSelection> {
-  late StudyTypeSelectionController selectionController;
+  late StudyTypeSelectionController studyTypeSelectionController;
   bool isClicked = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double width = size.width;
     double height = size.height;
-    selectionController = context.watch<StudyTypeSelectionController>();
+    studyTypeSelectionController = context.watch<StudyTypeSelectionController>();
     
     return Scaffold(
       // 가운데 점 alt+183 
@@ -34,7 +34,7 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 moveStep(context, UiHelpers.prev, '뒤로가기'),
-                moveStep(context, UiHelpers.next, '다음단계', nextPage: selectionController.nextPage),
+                moveStep(context, UiHelpers.next, '다음단계', nextPage: studyTypeSelectionController.nextPage),
               ],
             ),
           ],    
@@ -69,12 +69,12 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
         // 2. 디자인의 width, height 비율 다름
         InkWell(
           onTap: () {
-            selectionController.selectType(SelectedType.bookType);
+            studyTypeSelectionController.selectType(SelectedType.bookType);
           },
           child: Container(
             key: const Key('study_book'),
             decoration: BoxDecoration(
-              color: selectionController.selectedType == SelectedType.bookType ?
+              color: studyTypeSelectionController.selectedType == SelectedType.bookType ?
               const Color(0xff197ca8f8) :
               Colors.transparent,
               borderRadius: BorderRadius.circular(10),
@@ -109,13 +109,13 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
         ),
         InkWell(
           onTap: () {
-            selectionController.selectType(SelectedType.videoType);
+            studyTypeSelectionController.selectType(SelectedType.videoType);
           },
           child: Container(
             key: const Key('study_video'),
             decoration: BoxDecoration(
               // ignore: use_full_hex_values_for_flutter_colors
-              color: selectionController.selectedType == SelectedType.videoType ?
+              color: studyTypeSelectionController.selectedType == SelectedType.videoType ?
                 const Color(0xff197ca8f8) :
                 Colors.transparent,
               borderRadius: BorderRadius.circular(10),

@@ -7,18 +7,18 @@ import 'package:provider/provider.dart';
 
 import 'common_layout/common_widgets.dart';
 
-class StudyEnrollment extends StatefulWidget {
-  const StudyEnrollment({super.key});
+class BookEnrollment extends StatefulWidget {
+  const BookEnrollment({super.key});
   // const double a = 0; 클래스 변수 필드에서는 const사용 불가, static 필요
   // 이유 : 클래스 생성시 생성자를 도는데 컴파일 시 먼저 읽어 드리는 const 변수가 클래스 변수로 존재하면
   // 클래스 생성 전에 클래스 변수가 먼저 생성되어 있는 모순이 발생
   @override
-  State<StudyEnrollment> createState() => _StudyEnrollmentState();
+  State<BookEnrollment> createState() => _BookEnrollmentState();
 }
 
 const double fontSize = 16;
 
-class _StudyEnrollmentState extends State<StudyEnrollment> {
+class _BookEnrollmentState extends State<BookEnrollment> {
   final _textController = TextEditingController();
   late StudyEnrollmentController studyEnrollmentController;
   late dynamic bookList;
@@ -192,8 +192,14 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
               Flexible(
                 child: IconButton(
                   icon: const Icon(Icons.arrow_forward_ios_rounded),
-                  onPressed: () {
-                    bookInfoDialog(context, selectedBook);
+                  onPressed: () async {
+                    await bookInfoDialog(context, selectedBook);
+                    studyEnrollmentController.rowSelection(selectedBook); // -> 이미 선택된 상태에서 선택 누르면 선택 해제됨
+                    studyEnrollmentController.getNextPage(selectedBook);
+                    // if (!mounted) return;
+                    // print("롸?${studyEnrollmentController.nextPage}");
+                    // Navigator.push(context, studyEnrollmentController.nextPage);
+                    
                   },
                 ),
               ),
@@ -201,7 +207,7 @@ class _StudyEnrollmentState extends State<StudyEnrollment> {
           ),
         ),
       ),
-    );
+    );    
   }
 }
 

@@ -134,7 +134,9 @@ Widget _thumbnailBox(KakaoWorkbook selectedBook) {
 // ButtonStyle - MaterialStateProperty로 이벤트 시 ui rebuild
 Widget _buttonStyleButton(BuildContext context, String message) {
   return ElevatedButton(
-    onPressed: () => Navigator.pop(context),
+    onPressed: () {
+      Navigator.pop(context);
+    },
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all<Color>(const Color(0xfff6f7fa)),
       foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {

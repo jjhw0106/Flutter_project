@@ -1,5 +1,5 @@
 import 'package:dev_test/helpers/enums.dart';
-import 'package:dev_test/ui/workbook/study_enrollment.dart';
+import 'package:dev_test/ui/workbook/book_enrollment.dart';
 import 'package:flutter/material.dart';
 
 class StudyTypeSelectionController with ChangeNotifier{
@@ -18,7 +18,7 @@ class StudyTypeSelectionController with ChangeNotifier{
     
     switch (selectedType){
       case SelectedType.bookType:
-        nextPage = const StudyEnrollment();
+        nextPage = const BookEnrollment();
         print(nextPage);
         break;
       case SelectedType.videoType:
