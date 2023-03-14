@@ -199,7 +199,6 @@ class _BookEnrollmentState extends State<BookEnrollment> {
                     // if (!mounted) return;
                     // print("롸?${studyEnrollmentController.nextPage}");
                     // Navigator.push(context, studyEnrollmentController.nextPage);
-                    
                   },
                 ),
               ),
