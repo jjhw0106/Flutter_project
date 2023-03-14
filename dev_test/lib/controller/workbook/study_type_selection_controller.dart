@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class StudyTypeSelectionController with ChangeNotifier{
   // bool isClicked = false;
   // 현재 선택되어 있는 학습타입 (교재 / 인강 / nothing)
-  Enum? selectedType = SelectedType.bookType;
+  SelectedType? selectedType = SelectedType.bookType;
   dynamic nextPage;
 
   // 학습 타입에 맞는 다음 페이지를 지정
@@ -25,6 +25,9 @@ class StudyTypeSelectionController with ChangeNotifier{
         nextPage = null;
         print(nextPage);
         break;
+      case null:
+        nextPage = null;
+      break;
     }
     notifyListeners();
   }

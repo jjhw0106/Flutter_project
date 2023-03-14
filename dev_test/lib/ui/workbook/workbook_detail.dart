@@ -1,3 +1,4 @@
+import 'package:dev_test/controller/workbook/workbook_detail_controller.dart';
 import 'package:dev_test/data/model/kakao_workbook.dart';
 import 'package:dev_test/ui/workbook/common_layout/common_widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,19 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
   // @override
   // List<TextEditingController> textEditingControllerList =[];
   final _textEditingController = TextEditingController();
+  final testList = [1,2,3,4,5];
+  late int selectedTest;
+  WorkbookDetailController workbookDetailController = WorkbookDetailController();
+  
+  @override
+  void initState() {
+    print("Init WorkbookDetail state!!!");
+    workbookDetailController.getToday();
+    super.initState();
+    setState(() {
+      selectedTest = testList[0];
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,19 +54,20 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
                 Expanded(
                   child: TextField(
                       controller: _textEditingController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: '학습 범위',
+                        labelText: '시작 페이지',
                       )),
                 ),
                 Expanded(
                   child: TextField(
                       controller: _textEditingController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: '학습 범위',
+                        labelText: '종료 페이지',
                       )),
                 ),
+                const Text('페이지'),
               ],
             ),
             const Text("목표 달성 완료 일자 설정"),
@@ -60,6 +75,15 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 const Text('시작 일자'),
+                DropdownButton(
+                  value: selectedTest,
+                  items: testList.map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
+                  onChanged: (selected) {
+                    setState(() {
+                      selectedTest = selected as int;
+                    });
+                  },
+                  ),
                 Text(widget.kakaoWorkbook.title),
               ],
             ),

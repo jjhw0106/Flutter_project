@@ -9,7 +9,6 @@ enum UiHelpers {
 enum SelectedType {
   bookType,
   videoType,
-  nothing
 }
 // 후보 학습 계획표 인덱스에 해당하는 enum value 리턴
 enum StudyPlanCandidatesIdx {
