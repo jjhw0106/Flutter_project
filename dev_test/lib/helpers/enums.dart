@@ -45,3 +45,9 @@ enum StudyPlanSubjectColor {
   }
 }
 
+// DropDown에 들어갈 날짜 등 설정
+// ex_ 학습시작 -> 30일 / 총 학습기간 -> 26주
+// enum DropdownRange {
+//   dayRange(30),
+//   weekRange(26);
+// }
