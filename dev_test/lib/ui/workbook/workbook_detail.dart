@@ -16,7 +16,7 @@ class WorkbookDetail extends StatefulWidget {
 
 class _WorkbookDetailState extends State<WorkbookDetail> {
   // @override
-  List<TextEditingController> _textEditingControllerList =[];
+  final List<TextEditingController> _textEditingControllerList =[];
   WorkbookDetailController workbookDetailController = WorkbookDetailController();
   
   @override
@@ -82,16 +82,32 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
               ),
               Expanded(
                 flex: 4,
-                child: DropdownButton(
-                  value: workbookDetailController.selectedStartDate,
-                  items: workbookDetailController.startDateList.map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
-                  onChanged: (selected) {
-                    print(selected);
-                    setState(() {
-                      // workbookDetailController.selectedWeekterm = selected as int;
-                      workbookDetailController.selectedStartDate = selected as String;
-                    });
+                // state를 controller에서 관리하기 위해 setState를 쓰지 않고 ValueListenableBuilder위젯을 사용
+                child: ValueListenableBuilder(
+                  valueListenable: workbookDetailController.selectedStartDateNotifier,
+                  builder: (context, value, child) {
+                    return DropdownButton(
+                      value: workbookDetailController.selectedStartDate,
+                      items: workbookDetailController.getFormattedStartDateList().map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
+                      onChanged: (selected) {
+                        print(selected);
+                        workbookDetailController.selectStartDate(selected as String);
+                      },
+                    );
                   },
+
+                  // 화면에서 setState를 함
+                  // child: DropdownButton(
+                  //   value: workbookDetailController.selectedStartDate,
+                  //   items: workbookDetailController.startDateList.map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
+                  //   onChanged: (selected) {
+                  //     print(selected);
+                  //     workbookDetailController.selectStartDate(selected as String);
+                  //     // setState(() {
+                  //     //   workbookDetailController.selectedStartDate = selected as String;
+                  //     // });
+                  //   },
+                  // ),
                 ),
               ),
             ],
@@ -105,13 +121,19 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
               ),
               Expanded(
                 flex: 4,
-                child: DropdownButton(
-                  value: workbookDetailController.selectedWeekterm,
-                  items: workbookDetailController.weekTermList.map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
-                  onChanged: (selected) {
-                    setState(() {
-                      workbookDetailController.selectedWeekterm = selected as int;
-                    });
+                child: ValueListenableBuilder(
+                  valueListenable: workbookDetailController.selectedWeektermNotifier,
+                  builder: (context, value, child) {
+                    return DropdownButton(
+                      value: workbookDetailController.selectedWeekterm,
+                      items: workbookDetailController.weekTermList.map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
+                      onChanged: (selected) {
+                        workbookDetailController.selectWeekterm(selected as int);
+                        // setState(() {
+                        //   workbookDetailController.selectedWeekterm = selected as int;
+                        // });
+                      },
+                    );
                   },
                 ),
               ),
@@ -123,12 +145,11 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
               const Expanded(
                 flex: 2,
                 child: Text('예상종료일자')
-                ),
+              ),
               Expanded(
                 flex: 4,
-                child: Text(widget.kakaoWorkbook.title, 
-                overflow: TextOverflow.clip),
-              )
+                child: Text('workbookDetailController.getExpectedEndDate()', overflow: TextOverflow.clip),
+              ),
             ],
           ),
         ],
