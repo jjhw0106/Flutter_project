@@ -4,11 +4,15 @@ import 'package:flutter/cupertino.dart';
 
 class WorkbookDetailController with ChangeNotifier{
   List<int> weekTermList = [];
-  List<String> startDateList=[];
+  // List<String> startDateList=[];
+  List<DateTime> startDateList=[];
   late String selectedStartDate;
+  // late DateTime selectedStartDate;
   late int selectedWeekterm;
   late final DateTime today;
   late final Date dateUtil;
+  late final ValueNotifier<String> selectedStartDateNotifier;
+  late final ValueNotifier<int> selectedWeektermNotifier;
 
   Future onInit() async {
     dateUtil = Date();
@@ -19,6 +23,8 @@ class WorkbookDetailController with ChangeNotifier{
     }
     selectedWeekterm = weekTermList[0];
     selectedStartDate = getToday();
+    selectedStartDateNotifier = ValueNotifier<String>("");
+    selectedWeektermNotifier = ValueNotifier<int>(-1);
     setStartDateList();
   }
 
@@ -28,8 +34,28 @@ class WorkbookDetailController with ChangeNotifier{
     DateTime startDate = today;
     // 30일 선택 범위
     for(int i=0; i<30; i++){
-      startDateList.add(convertDateFormat(startDate.add(Duration(days: i))));
+      startDateList.add(startDate.add(Duration(days: i)));
     }
+  }
+
+  List<String> getFormattedStartDateList(){
+    List<String> result=[];
+    for(int i=0; i<startDateList.length;i++){
+      result.add(convertDateFormat(startDateList[i]));
+    }
+    return result;
+  }
+
+  void selectStartDate(String selected){
+    selectedStartDate = selected;
+    selectedStartDateNotifier.value = selectedStartDate;
+    // notifyListeners();
+  }
+
+  void selectWeekterm(int selected){
+    selectedWeekterm = selected; 
+    selectedWeektermNotifier.value = selectedWeekterm;
+    // notifyListeners();
   }
 
   // 오늘 날짜 yyyMMdd(요일)로 포맷팅
@@ -43,7 +69,15 @@ class WorkbookDetailController with ChangeNotifier{
   // 해당 일자의 요일값이 일요일인지 체크
   // 아니면 loop(일자 + 1)
   String getExpectedEndDate(){
-    return "";
+    DateTime targetDate = DateTime.parse(selectedStartDate);
+    print(targetDate);
+    targetDate = targetDate.add(Duration(days: selectedWeekterm*7));
+    while (true) {
+      if(targetDate.weekday == 7) break;
+      targetDate = targetDate.add(const Duration(days: 1));
+    }
+    
+    return convertDateFormat(targetDate);
   }
 
 

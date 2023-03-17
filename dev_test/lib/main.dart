@@ -1,6 +1,7 @@
 import 'package:dev_test/controller/point/randombox_controller.dart';
 import 'package:dev_test/controller/workbook/study_enrollment_controller.dart';
 import 'package:dev_test/controller/workbook/study_type_selection_controller.dart';
+import 'package:dev_test/controller/workbook/workbook_detail_controller.dart';
 import 'package:dev_test/data/model/point_dialog_message.dart';
 import 'package:dev_test/data/provider/study_enrollment_provider.dart';
 import 'package:dev_test/data/repository/study_enrollment_repository.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatefulWidget {
     ChangeNotifierProvider<StudyTypeSelectionController>(
         create: (_) =>
             StudyTypeSelectionController()),
+    ChangeNotifierProvider<WorkbookDetailController>(
+        create: (_) =>
+            WorkbookDetailController()),
   ];
   const MyApp({Key? key}) : super(key: key);
 
