@@ -38,6 +38,7 @@ class RandomBoxController with ChangeNotifier {
       isLoading = false;
       return _message;
     }
+    isLoading = false; // ->ChangeNotifier필요할 수 있다(server에서 받아올 경우)
     return _message;
   }
 }

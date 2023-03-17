@@ -29,9 +29,6 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
     for(int i=0; i<2; i++){
       _textEditingControllerList.add(TextEditingController());
     }
-    // setState(() {
-    //   selectedTest = testList[0];
-    // });
   }
   @override
   Widget build(BuildContext context) {
@@ -50,7 +47,6 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
             ],
           ),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const Text('학습 범위'),
               Expanded(
@@ -78,7 +74,7 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
             children: [
               Expanded(
                 flex: 2,
-                child: Text("시작날짜 ${workbookDetailController.selectedStartDate}") //Text('시작 일자')
+                child: Text("시작날짜 ${workbookDetailController.selectedStartDate}")
               ),
               Expanded(
                 flex: 4,
@@ -95,19 +91,6 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
                       },
                     );
                   },
-
-                  // 화면에서 setState를 함
-                  // child: DropdownButton(
-                  //   value: workbookDetailController.selectedStartDate,
-                  //   items: workbookDetailController.startDateList.map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
-                  //   onChanged: (selected) {
-                  //     print(selected);
-                  //     workbookDetailController.selectStartDate(selected as String);
-                  //     // setState(() {
-                  //     //   workbookDetailController.selectedStartDate = selected as String;
-                  //     // });
-                  //   },
-                  // ),
                 ),
               ),
             ],
@@ -129,9 +112,6 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
                       items: workbookDetailController.weekTermList.map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
                       onChanged: (selected) {
                         workbookDetailController.selectWeekterm(selected as int);
-                        // setState(() {
-                        //   workbookDetailController.selectedWeekterm = selected as int;
-                        // });
                       },
                     );
                   },
