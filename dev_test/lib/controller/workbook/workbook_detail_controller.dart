@@ -1,13 +1,10 @@
 import 'package:dev_test/common/date.dart';
-import 'package:dev_test/helpers/enums.dart';
 import 'package:flutter/cupertino.dart';
 
 class WorkbookDetailController with ChangeNotifier{
   List<int> weekTermList = [];
-  // List<String> startDateList=[];
   List<DateTime> startDateList=[];
   late String selectedStartDate;
-  // late DateTime selectedStartDate;
   late int selectedWeekterm;
   late final DateTime today;
   late final Date dateUtil;
@@ -79,6 +76,4 @@ class WorkbookDetailController with ChangeNotifier{
     
     return convertDateFormat(targetDate);
   }
-
-
 }

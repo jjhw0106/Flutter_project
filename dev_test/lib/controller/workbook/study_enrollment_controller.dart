@@ -58,10 +58,6 @@ class StudyEnrollmentController with ChangeNotifier {
     nextPage = null;
     // 클릭된 경우만 nextPage 지정해야하기 때문
     if (selectedItem.isClicked == true) {
-      // if (selectedItem.runtimeType == KakaoWorkbook) {
-      //   nextPage = const WorkbookDetail();
-      //   print("nextPage2: $nextPage");
-      // }
       print("nextpage: $nextPage");
       switch (selectedItem.runtimeType) {
         case KakaoWorkbook:
