@@ -2,22 +2,31 @@ import 'package:dev_test/helpers/enums.dart';
 import 'package:dev_test/ui/workbook/book_enrollment.dart';
 import 'package:flutter/material.dart';
 
-AppBar appBar({String? selected, required String message}) {
+AppBar appBar(BuildContext context, {String? selected, required String message}) {
   return AppBar(
-      iconTheme: const IconThemeData(
-        color: Colors.black, //change your color here
+    leading: IconButton(
+        icon: const Icon(
+          Icons.arrow_back_ios,
+          color: Color(0xff272727),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
       ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      automaticallyImplyLeading: true,
-      centerTitle: true,
-      title: Text(message,
-          style: const TextStyle(
-            color: Colors.black, 
-            fontSize: 21.7,
-            fontWeight: FontWeight.bold
-            ),
+    // iconTheme: const IconThemeData(
+    //   color: Colors.black, //change your color here
+    // ),
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    automaticallyImplyLeading: true,
+    centerTitle: true,
+    title: Text(message,
+        style: const TextStyle(
+          color: Colors.black, 
+          fontSize: 21.7,
+          fontWeight: FontWeight.bold
           ),
+        ),
     );
 }
 
