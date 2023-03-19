@@ -23,7 +23,7 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
     
     return Scaffold(
       // 가운데 점 alt+183 
-      appBar: appBar(message: "문제집·인강 설정"),
+      appBar: appBar(context, message: "문제집·인강 설정"),
       body: Center(
         child: Column(
           children: <Widget> [

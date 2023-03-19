@@ -46,7 +46,7 @@ class _BookEnrollmentState extends State<BookEnrollment> {
       child: Scaffold(
         // 키보드 입력시 화면 밀림 방지
         resizeToAvoidBottomInset: false,
-        appBar: appBar(message: "문제집 등록", selected: "국어"),
+        appBar: appBar(context, message: "문제집 등록", selected: "국어"),
         body: !studyEnrollmentController.isLoading
             ? Column(
                 children: [
