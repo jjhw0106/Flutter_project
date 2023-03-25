@@ -1,6 +1,7 @@
 import 'package:dev_test/helpers/enums.dart';
-import 'package:dev_test/ui/workbook/book_enrollment.dart';
 import 'package:flutter/material.dart';
+
+import '../../ui/workbook/book_enrollment.dart';
 
 class StudyTypeSelectionController with ChangeNotifier{
   // 현재 선택되어 있는 학습타입 (교재 / 인강 / nothing)

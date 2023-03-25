@@ -1,6 +1,7 @@
 import 'package:dev_test/ui/point/random_box.dart';
-import 'package:dev_test/ui/workbook/study_type_selection.dart';
 import 'package:flutter/material.dart';
+
+import 'workbook/study_type_selection.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

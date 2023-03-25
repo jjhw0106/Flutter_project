@@ -4,7 +4,6 @@ import 'package:dev_test/helpers/enums.dart';
 import 'package:dev_test/ui/workbook/book_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'common_layout/common_widgets.dart';
 
 class BookEnrollment extends StatefulWidget {
@@ -142,6 +141,7 @@ class _BookEnrollmentState extends State<BookEnrollment> {
     studyEnrollmentController.setBookInfoList(_textController.text);
     screenMessage = studyEnrollmentController.resultYn();
   }
+  
   // 하단 노출 메시지
   Widget footerText(String message) {
     return Text(
@@ -196,9 +196,6 @@ class _BookEnrollmentState extends State<BookEnrollment> {
                     await bookInfoDialog(context, selectedBook);
                     studyEnrollmentController.rowSelection(selectedBook); // -> 이미 선택된 상태에서 선택 누르면 선택 해제됨
                     studyEnrollmentController.getNextPage(selectedBook);
-                    // if (!mounted) return;
-                    // print("롸?${studyEnrollmentController.nextPage}");
-                    // Navigator.push(context, studyEnrollmentController.nextPage);
                   },
                 ),
               ),
@@ -209,4 +206,5 @@ class _BookEnrollmentState extends State<BookEnrollment> {
     );    
   }
 }
+
 

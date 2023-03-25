@@ -1,8 +1,9 @@
-import 'package:dev_test/controller/workbook/workbook_detail_controller.dart';
-import 'package:dev_test/data/model/kakao_workbook.dart';
-import 'package:dev_test/ui/workbook/common_layout/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../controller/workbook/workbook_detail_controller.dart';
+import '../../data/model/kakao_workbook.dart';
+import 'common_layout/common_widgets.dart';
 
 class WorkbookDetail extends StatefulWidget {
   late final KakaoWorkbook kakaoWorkbook;
@@ -28,7 +29,7 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
     super.initState();
 
     // 필요한 Text Feild만큼 TextController 초기화
-    for(int i=0; i<2; i++){
+    for(int i = 0; i < 2; i++){
       _textEditingControllerList.add(TextEditingController());
     }
   }
@@ -37,16 +38,29 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
   // dispose()내부에서 controller의 state들을 직접 해제해주어야 한다.
   @override
   void dispose() {
-    controller.startDateList.clear();
-    controller.weekTermList.clear();
+    controller.statesClear();
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
     controller = context.watch<WorkbookDetailController>();
 
     return Scaffold(
-      appBar: appBar(context, message: "문제집 등록"),
+      appBar: appBar(
+        context, 
+        message: "문제집 등록", 
+        actionField: [
+          IconButton(
+            icon: const Icon(Icons.check, size: 30),
+            onPressed: () {
+              print(controller.saveMyWorkbook());
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           const Text("문제집명 입력"),
@@ -91,10 +105,9 @@ class _WorkbookDetailState extends State<WorkbookDetail> {
               ),
               Expanded(
                 flex: 4,
-                // state를 controller에서 관리하기 위해 setState를 쓰지 않고 ValueListenableBuilder위젯을 사용
                 child: DropdownButton(
                   value: controller.formattedSelectedStartDate,
-                  items: controller.getFormattedStartDateList().map((e) => DropdownMenuItem(value: e, child: Text("$e"))).toList(), 
+                  items: controller.getFormattedStartDateList().map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(), 
                   onChanged: (selected) {
                     print(selected);
                     controller.selectStartDate(selected as String);

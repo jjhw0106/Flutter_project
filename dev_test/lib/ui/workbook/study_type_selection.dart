@@ -1,9 +1,9 @@
 import 'package:dev_test/controller/workbook/study_type_selection_controller.dart';
 import 'package:dev_test/helpers/enums.dart';
-import 'package:dev_test/ui/workbook/common_layout/common_widgets.dart';
-import 'package:dev_test/ui/workbook/book_enrollment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'common_layout/common_widgets.dart';
 
 class StudyTypeSelection extends StatefulWidget {
   const StudyTypeSelection({super.key});
@@ -145,53 +145,4 @@ class _StudyTypeSelectionState extends State<StudyTypeSelection> {
       ],
     ); 
   }
-
-  // InkWell selectionBox(double width, double height, SelectedType type, bool isClicked) {
-  //   return InkWell(
-  //       onTap: () {
-  //         isClicked = !isClicked;
-  //         selectionController.selectType(type);
-  //       },
-  //       child: Container(
-  //         decoration: BoxDecoration(
-  //           color: isClicked ?
-  //           const Color(0xff197ca8f8) :
-  //           Colors.transparent,
-  //           borderRadius: BorderRadius.circular(10),
-  //           border: Border.all(
-  //             color: const Color(0xff5664cd),
-  //           )
-  //         ),
-  //         width : width * 0.4,
-  //         height: height * 0.4,
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             type == SelectedType.bookType ? 
-  //             Image.asset(
-  //               'assets/images/iconbook.png',
-  //               width: width * 0.3,
-  //               height: width * 0.2,
-  //               fit: BoxFit.fitHeight,
-  //             ) :
-  //             Image.asset(
-  //               'assets/images/iconvideo.png',
-  //               width: width * 0.3,
-  //               height: width * 0.2,
-  //               fit: BoxFit.fitHeight,
-  //             ),
-  //             SizedBox(height: width * 0.05),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: const <Widget> [
-  //                 Text(
-  //                   '문제집 등록'
-  //                 ),
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     );
-  // }
 }

@@ -1,8 +1,7 @@
 import 'package:dev_test/helpers/enums.dart';
-import 'package:dev_test/ui/workbook/book_enrollment.dart';
 import 'package:flutter/material.dart';
 
-AppBar appBar(BuildContext context, {String? selected, required String message}) {
+AppBar appBar(BuildContext context, {String? selected, required String message, List<Widget>? actionField}) {
   return AppBar(
     leading: IconButton(
         icon: const Icon(
@@ -13,14 +12,18 @@ AppBar appBar(BuildContext context, {String? selected, required String message})
           Navigator.of(context).pop();
         },
       ),
-    // iconTheme: const IconThemeData(
-    //   color: Colors.black, //change your color here
-    // ),
+    // actionField 
+    actions: 
+      actionField ?? [],
+    iconTheme: const IconThemeData(
+      color: Colors.black, //change your color here
+    ),
     elevation: 0,
     backgroundColor: Colors.transparent,
     automaticallyImplyLeading: true,
     centerTitle: true,
-    title: Text(message,
+    title: Text(
+        message,
         style: const TextStyle(
           color: Colors.black, 
           fontSize: 21.7,

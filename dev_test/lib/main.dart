@@ -28,7 +28,7 @@ class MyApp extends StatefulWidget {
             StudyTypeSelectionController()),
     ChangeNotifierProvider<WorkbookDetailController>(
         create: (_) =>
-            WorkbookDetailController()),
+            WorkbookDetailController(StudyEnrollmentRepository(StudyEnrollmentProvider()))),
   ];
   const MyApp({Key? key}) : super(key: key);
 

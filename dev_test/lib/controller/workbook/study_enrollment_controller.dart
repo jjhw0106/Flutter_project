@@ -3,6 +3,7 @@ import 'package:dev_test/data/repository/study_enrollment_repository.dart';
 import 'package:dev_test/ui/workbook/workbook_detail.dart';
 import 'package:flutter/cupertino.dart';
 
+
 class StudyEnrollmentController with ChangeNotifier {
   late List<KakaoWorkbook> bookList;
   final StudyEnrollmentRepository studyEnrollmentRepository;

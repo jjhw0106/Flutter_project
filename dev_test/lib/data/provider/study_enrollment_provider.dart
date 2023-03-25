@@ -1,7 +1,11 @@
+import 'package:dev_test/common/global_variable.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class StudyEnrollmentProvider {
+
+  final GlobalVariable _globalVariable = GlobalVariable();
+
   // 카카오 책정보 불러오기
   Future<List<dynamic>> getBooksFromKakao(String? title) async {
     // API 연결 위한 DIO
@@ -15,9 +19,7 @@ class StudyEnrollmentProvider {
         },
       connectTimeout: 3000,
       headers: {'Authorization': 'KakaoAK $kakaoKey' },
-      
     );
-
     Dio dio = Dio(options);
 
     try {
@@ -26,8 +28,22 @@ class StudyEnrollmentProvider {
       print("API Connected");
       return data["documents"];
     } catch (e) {
-      print("API Error: $e"); // ResponseHelper에서 에러 시 처리
+      print("API Error: $e");
       throw Exception();
+    }
+  }
+
+  Future<String> test(String test) async{
+    Dio dio =Dio();
+
+    try {
+      // Response<dynamic> result = await dio.get(
+      //   _globalVariable.url + 'workbook/saveMyWorkbook',
+      // );
+
+      return "success";
+    } on DioError catch (err) {
+      return err.toString();
     }
   }
 }

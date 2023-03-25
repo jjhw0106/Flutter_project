@@ -1,6 +1,6 @@
-import 'package:dev_test/data/model/kakao_workbook.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../data/model/kakao_workbook.dart';
 // 컴파일되는 순간 미리 만들어 놓는것인지?
 Future bookInfoDialog(BuildContext context, KakaoWorkbook selectedBook) async {
   const double contentFontSize = 12.7;
