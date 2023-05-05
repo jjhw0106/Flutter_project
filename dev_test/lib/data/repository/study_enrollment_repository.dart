@@ -10,7 +10,7 @@ class StudyEnrollmentRepository {
     return _studyEnrollmentProvider.getBooksFromKakao(title);
   }
 
-  Future<String> test(String param) async{
-    return _studyEnrollmentProvider.test(param);
+  Future<String> saveMyWorkbook(String param) async{
+    return _studyEnrollmentProvider.saveMyWorkbook(param);
   }
 }

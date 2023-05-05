@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class StudyEnrollmentProvider {
 
   final GlobalVariable _globalVariable = GlobalVariable();
-
+  
   // 카카오 책정보 불러오기
   Future<List<dynamic>> getBooksFromKakao(String? title) async {
     // API 연결 위한 DIO
@@ -33,13 +33,15 @@ class StudyEnrollmentProvider {
     }
   }
 
-  Future<String> test(String test) async{
+  Future<String> saveMyWorkbook(String test) async{
     Dio dio =Dio();
-
+    String str = _globalVariable.url + 'workbook/hello2';
+    print(str);
     try {
-      // Response<dynamic> result = await dio.get(
-      //   _globalVariable.url + 'workbook/saveMyWorkbook',
-      // );
+      Response<dynamic> result = await dio.get(
+        'http://192.168.137.1:3000/workbook/hello2',
+      );
+      // print(_globalVariable.url + 'workbook/saveMyWorkbook');
 
       return "success";
     } on DioError catch (err) {

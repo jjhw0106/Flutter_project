@@ -1,3 +1,4 @@
+import 'package:dev_test/ui/mynote/my_note_enrollment.dart';
 import 'package:dev_test/ui/point/random_box.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,12 @@ class Home extends StatelessWidget {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const StudyTypeSelection()));
               }, 
               child: const Text("SetStudytype")
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MyNoteEnrollment()));
+              }, 
+              child: const Text("MyNoteEnrollment")
             ),
           ],
         ),

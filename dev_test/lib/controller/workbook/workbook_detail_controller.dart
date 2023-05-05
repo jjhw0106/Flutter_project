@@ -100,7 +100,7 @@ class WorkbookDetailController with ChangeNotifier{
 
   Future<bool> saveMyWorkbook() async {
     String test = "Test";
-    studyEnrollmentRepository.test(test);
+    studyEnrollmentRepository.saveMyWorkbook(test);
     return test == "Test" ? true : false;
   }
 }
